@@ -1,9 +1,7 @@
-package com.aeo.mylensesstudio.mylensesstudio;
+package com.aeo.mylensesstudio.mylensesstudio.com.aeo.mylensesstudio.mylensesstudio.activity;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.aeo.mylensesstudio.mylensesstudio.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -23,14 +24,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -67,8 +68,14 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_help) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.msg_units);
+            builder.setCancelable(true);
+            builder.setPositiveButton(R.string.btn_ok, null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+//            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -80,21 +87,19 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_status) {
+            Toast.makeText(this, "Status", Toast.LENGTH_SHORT);
+        } else if (id == R.id.nav_periodo) {
+            Toast.makeText(this, "Periodo", Toast.LENGTH_SHORT);
+        } else if (id == R.id.nav_dados) {
+            Toast.makeText(this, "Dados", Toast.LENGTH_SHORT);
+        } else if (id == R.id.nav_notificacao) {
+            Toast.makeText(this, "Dados", Toast.LENGTH_SHORT);
+        } else if (id == R.id.nav_historico) {
+            Toast.makeText(this, "Historico", Toast.LENGTH_SHORT);
+        } else if (id == R.id.nav_compra) {
+            Toast.makeText(this, "Compra", Toast.LENGTH_SHORT);
         }
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
