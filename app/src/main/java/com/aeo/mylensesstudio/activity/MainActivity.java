@@ -1,4 +1,4 @@
-package com.aeo.mylensesstudio.mylensesstudio.com.aeo.mylensesstudio.mylensesstudio.activity;
+package com.aeo.mylensesstudio.activity;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -10,28 +10,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.aeo.mylensesstudio.mylensesstudio.R;
+import com.aeo.mylensesstudio.R;
+import com.aeo.mylensesstudio.util.Utility;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    // Object for intrinsic lock
+    public static final Object sDataLock = new Object();
+
+    public Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -41,6 +36,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if (savedInstanceState == null) {
+            Utility.setScreen(R.id.nav_status, toolbar, getSupportFragmentManager());
+        }
+
     }
 
     @Override
@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_help) {
+        if (id == R.id.menuHelp) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.msg_units);
             builder.setCancelable(true);
@@ -87,22 +86,51 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_status) {
-            Toast.makeText(this, "Status", Toast.LENGTH_SHORT);
-        } else if (id == R.id.nav_periodo) {
-            Toast.makeText(this, "Periodo", Toast.LENGTH_SHORT);
-        } else if (id == R.id.nav_dados) {
-            Toast.makeText(this, "Dados", Toast.LENGTH_SHORT);
-        } else if (id == R.id.nav_notificacao) {
-            Toast.makeText(this, "Dados", Toast.LENGTH_SHORT);
-        } else if (id == R.id.nav_historico) {
-            Toast.makeText(this, "Historico", Toast.LENGTH_SHORT);
-        } else if (id == R.id.nav_compra) {
-            Toast.makeText(this, "Compra", Toast.LENGTH_SHORT);
-        }
+        Utility.setScreen(id, toolbar, getSupportFragmentManager());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+
     }
+/*
+    private void setScreen(int id) {
+        if (id == R.id.nav_status) {
+            replaceFragment(new FragmentStatus());
+            toolbar.setTitle(R.string.nav_status);
+        } else if (id == R.id.nav_periodo) {
+            replaceFragment(new FragmentListReplaceLens());
+            toolbar.setTitle(R.string.nav_periodo);
+        } else if (id == R.id.nav_dados) {
+            toolbar.setTitle(R.string.nav_dados);
+        } else if (id == R.id.nav_notificacao) {
+            toolbar.setTitle(R.string.nav_notificacao);
+        } else if (id == R.id.nav_historico) {
+            toolbar.setTitle(R.string.nav_historico);
+        } else if (id == R.id.nav_compra) {
+            toolbar.setTitle(R.string.nav_compra);
+        }
+    }
+*/
+    /*
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction trans = fm.beginTransaction();
+
+        trans.replace(R.id.fragment_container, fragment);
+
+//		 * IMPORTANT: The following lines allow us to add the fragment to the
+//		 * stack and return to it later, by pressing back
+        trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+        // remove back stack
+        // getFragmentManager().popBackStack(null,
+        // FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        // trans.addToBackStack(null);
+
+        trans.commit();
+    }
+*/
+
 }

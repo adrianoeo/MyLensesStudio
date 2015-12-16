@@ -1,10 +1,7 @@
-package com.aeo.mylensesstudio.mylensesstudio.com.aeo.mylensesstudio.mylensesstudio.fragment;
+package com.aeo.mylensesstudio.fragment;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,152 +14,140 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.NumberPicker;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-//import com.aeo.mylenses.R;
-//import com.aeo.mylenses.analytics.Analytics;
-//import com.aeo.mylenses.analytics.Analytics.TrackerName;
-//import com.aeo.mylenses.dao.AlarmDAO;
-//import com.aeo.mylenses.dao.LensDAO;
-//import com.aeo.mylenses.dao.LensesDataDAO;
-//import com.aeo.mylenses.vo.LensVO;
-//import com.aeo.mylenses.vo.LensesVO;
+import com.aeo.mylensesstudio.R;
 
-public class DaysFragment extends Fragment {
+public class FragmentStatus extends Fragment {
 
-	private TextView tvDaysRemainingLeftEye;
-	private TextView tvDaysRemainingRightEye;
-	private TextView tvStrDayLeft;
-	private TextView tvStrDayRight;
-	private TextView tvStrUnitsLeft;
-	private TextView tvStrUnitsRight;
-	private TextView tvStrUnitsRemainingLeft;
-	private TextView tvStrUnitsRemainingRight;
-	private Button btnDaysNotUsedLeft;
-	private Button btnDaysNotUsedRight;
-	private TextView tvStrDaysNotUsedLeft;
-	private TextView tvStrDaysNotUsedRight;
-	private TextView tvLeftEye;
-	private TextView tvRightEye;
-	private TextView tvEmpty;
-	private View view1;
-	private View view2;
+    private TextView tvDaysRemainingLeftEye;
+    private TextView tvDaysRemainingRightEye;
+    private TextView tvStrDayLeft;
+    private TextView tvStrDayRight;
+    private TextView tvStrUnitsLeft;
+    private TextView tvStrUnitsRight;
+    private TextView tvStrUnitsRemainingLeft;
+    private TextView tvStrUnitsRemainingRight;
+    private Button btnDaysNotUsedLeft;
+    private Button btnDaysNotUsedRight;
+    private TextView tvStrDaysNotUsedLeft;
+    private TextView tvStrDaysNotUsedRight;
+    private TextView tvLeftEye;
+    private TextView tvRightEye;
+    private TextView tvEmpty;
+    private View view1;
+    private View view2;
 
-	private Menu menu;
+    private Menu menu;
 
-	protected static final String TAG_DAYS = "TAG_DAYS";
-	private Context context;
+    protected static final String TAG_DAYS = "TAG_DAYS";
+    private Context context;
 
-	private Animation animation;
+    private Animation animation;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-//		View view = inflater.inflate(R.layout.fragment_days, container, false);
-//		setHasOptionsMenu(true);
-//
-//		context = getActivity();
-//
-//		tvLeftEye = (TextView) view.findViewById(R.id.tvLeftEye);
-//		tvRightEye = (TextView) view.findViewById(R.id.tvRightEye);
-//		tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
-//		view1 = (View) view.findViewById(R.id.view1);
-//		view2 = (View) view.findViewById(R.id.view2);
-//
-//		tvDaysRemainingLeftEye = (TextView) view
-//				.findViewById(R.id.tvDaysRemainingLeftEye);
-//		tvDaysRemainingRightEye = (TextView) view
-//				.findViewById(R.id.tvDaysRemainingRightEye);
-//		tvStrDayLeft = (TextView) view.findViewById(R.id.tvStrDayLeft);
-//		tvStrDayRight = (TextView) view.findViewById(R.id.tvStrDayRight);
-//		tvStrUnitsLeft = (TextView) view.findViewById(R.id.tvStrUnitsLeft);
-//		tvStrUnitsRight = (TextView) view.findViewById(R.id.tvStrUnitsRight);
-//		tvStrUnitsRemainingLeft = (TextView) view
-//				.findViewById(R.id.tvStrUnitsRemainingLeft);
-//		tvStrUnitsRemainingRight = (TextView) view
-//				.findViewById(R.id.tvStrUnitsRemainingRight);
-//		btnDaysNotUsedLeft = (Button) view
-//				.findViewById(R.id.btnDaysNotUsedLeft);
-//		btnDaysNotUsedRight = (Button) view
-//				.findViewById(R.id.btnDaysNotUsedRight);
-//		tvStrDaysNotUsedLeft = (TextView) view
-//				.findViewById(R.id.tvStrDaysNotUsedLeft);
-//		tvStrDaysNotUsedRight = (TextView) view
-//				.findViewById(R.id.tvStrDaysNotUsedRight);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_status, container, false);
+        setHasOptionsMenu(true);
 
-		btnDaysNotUsedLeft.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				openDialogNumber(v);
-			}
-		});
+        context = getActivity();
 
-		btnDaysNotUsedRight.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				openDialogNumber(v);
-			}
-		});
+        tvLeftEye = (TextView) view.findViewById(R.id.tvLeftEye);
+        tvRightEye = (TextView) view.findViewById(R.id.tvRightEye);
+        tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
+        view1 = (View) view.findViewById(R.id.view1);
+        view2 = (View) view.findViewById(R.id.view2);
 
-		Bundle bundle = new Bundle();
-		bundle.putString("color_bg", "FFFFFF");
-		bundle.putString("color_border", "0000FF");
-		bundle.putString("color_link", "0066FF");
-		bundle.putString("color_text", "000000");
-		bundle.putString("color_url", "0033FF");
+        tvDaysRemainingLeftEye = (TextView) view
+                .findViewById(R.id.tvDaysRemainingLeftEye);
+        tvDaysRemainingRightEye = (TextView) view
+                .findViewById(R.id.tvDaysRemainingRightEye);
+        tvStrDayLeft = (TextView) view.findViewById(R.id.tvStrDayLeft);
+        tvStrDayRight = (TextView) view.findViewById(R.id.tvStrDayRight);
+        tvStrUnitsLeft = (TextView) view.findViewById(R.id.tvStrUnitsLeft);
+        tvStrUnitsRight = (TextView) view.findViewById(R.id.tvStrUnitsRight);
+        tvStrUnitsRemainingLeft = (TextView) view
+                .findViewById(R.id.tvStrUnitsRemainingLeft);
+        tvStrUnitsRemainingRight = (TextView) view
+                .findViewById(R.id.tvStrUnitsRemainingRight);
+        btnDaysNotUsedLeft = (Button) view
+                .findViewById(R.id.btnDaysNotUsedLeft);
+        btnDaysNotUsedRight = (Button) view
+                .findViewById(R.id.btnDaysNotUsedRight);
+        tvStrDaysNotUsedLeft = (TextView) view
+                .findViewById(R.id.tvStrDaysNotUsedLeft);
+        tvStrDaysNotUsedRight = (TextView) view
+                .findViewById(R.id.tvStrDaysNotUsedRight);
 
-//		animation = AnimationUtils.loadAnimation(context, R.anim.scale);
+        btnDaysNotUsedLeft.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialogNumber(v);
+            }
+        });
 
-//		return view;
-        return null;
-	}
+        btnDaysNotUsedRight.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialogNumber(v);
+            }
+        });
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		this.menu = menu;
+        Bundle bundle = new Bundle();
+        bundle.putString("color_bg", "FFFFFF");
+        bundle.putString("color_border", "0000FF");
+        bundle.putString("color_link", "0066FF");
+        bundle.putString("color_text", "000000");
+        bundle.putString("color_url", "0033FF");
 
-//		MenuItem menuItemInsert = menu.findItem(R.id.menuInsertLens);
-//		menuItemInsert.setVisible(false);
+        animation = AnimationUtils.loadAnimation(context, R.anim.scale);
 
-		super.onCreateOptionsMenu(menu, inflater);
-	}
+        return view;
+    }
 
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-		enableMenuItem(false);
-	}
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        this.menu = menu;
 
-	private void enableMenuItem(boolean enabled) {
-//		MenuItem menuItemInsert = menu.findItem(R.id.menuInsertLens);
-//		if (menuItemInsert != null) {
-//			menuItemInsert.setVisible(enabled);
-//		}
+        MenuItem menuItemInsert = menu.findItem(R.id.menuInsertLens);
+        menuItemInsert.setVisible(false);
 
-	}
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        enableMenuItem(false);
+    }
 
-//		switch (item.getItemId()) {
-//		case R.id.menuHelp:
-//			Builder builder = new Builder(context);
-//			builder.setMessage(R.string.msg_units);
-//			builder.setCancelable(true);
-//			builder.setPositiveButton(R.string.btn_ok, null);
-//			AlertDialog dialog = builder.create();
-//			dialog.show();
-//			return true;
-//		default:
-			return super.onOptionsItemSelected(item);
-//		}
-	}
+    private void enableMenuItem(boolean enabled) {
+        MenuItem menuItemInsert = menu.findItem(R.id.menuInsertLens);
+        if (menuItemInsert != null) {
+            menuItemInsert.setVisible(enabled);
+        }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menuHelp:
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage(R.string.msg_units);
+                builder.setCancelable(true);
+                builder.setPositiveButton(R.string.btn_ok, null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 //	@SuppressLint("ResourceAsColor")
-//	public void setDays(LensVO lensVO) {
+//	public void setDays(LensStatusVO lensVO) {
 //		LensDAO dao = LensDAO.getInstance(context);
 //
 //		int idLenses = dao.getLastIdLens();
@@ -272,7 +257,7 @@ public class DaysFragment extends Fragment {
 //
 //	}
 
-//	public void setNumUnitsLenses(LensVO lensVO) {
+//	public void setNumUnitsLenses(LensStatusVO lensVO) {
 //		LensesVO lensesDataVO = LensesDataDAO.getInstance(context)
 //				.getLastLenses();
 //
@@ -357,7 +342,7 @@ public class DaysFragment extends Fragment {
 //		}
 //	}
 
-//	private void setDaysNotUsed(LensVO lensVO) {
+//	private void setDaysNotUsed(LensStatusVO lensVO) {
 //
 //		if (lensVO != null) {
 //			// Left
@@ -396,21 +381,21 @@ public class DaysFragment extends Fragment {
 //		}
 //	}
 
-	private void setVisibleUnitLeft(int visibility) {
-		tvStrUnitsLeft.setVisibility(visibility);
-		tvStrUnitsRemainingLeft.setVisibility(visibility);
-	}
+    private void setVisibleUnitLeft(int visibility) {
+        tvStrUnitsLeft.setVisibility(visibility);
+        tvStrUnitsRemainingLeft.setVisibility(visibility);
+    }
 
-	private void setVisibleUnitRight(int visibility) {
-		tvStrUnitsRight.setVisibility(visibility);
-		tvStrUnitsRemainingRight.setVisibility(visibility);
-	}
+    private void setVisibleUnitRight(int visibility) {
+        tvStrUnitsRight.setVisibility(visibility);
+        tvStrUnitsRemainingRight.setVisibility(visibility);
+    }
 
-	@Override
-	public void onResume() {
-		super.onResume();
+    @Override
+    public void onResume() {
+        super.onResume();
 //		LensDAO lensDAO = LensDAO.getInstance(context);
-//		LensVO lensVO = lensDAO.getLastLens();
+//		LensStatusVO lensVO = lensDAO.getLastLens();
 //
 //		setDays(lensVO);
 //		setNumUnitsLenses(lensVO);
@@ -419,25 +404,25 @@ public class DaysFragment extends Fragment {
 //		if (adView != null) {
 //			adView.resume();
 //		}
-	}
+    }
 
-	@Override
-	public void onPause() {
+    @Override
+    public void onPause() {
 //		if (adView != null) {
 //			adView.pause();
 //		}
-		super.onPause();
-	}
+        super.onPause();
+    }
 
-	@Override
-	public void onDestroy() {
+    @Override
+    public void onDestroy() {
 //		if (adView != null) {
 //			adView.destroy();
 //		}
-		super.onDestroy();
-	}
+        super.onDestroy();
+    }
 
-	public void openDialogNumber(View view) {
+    public void openDialogNumber(View view) {
 //		final View v = view;
 //		final RelativeLayout layout = new RelativeLayout(context);
 //		final NumberPicker numberPicker = new NumberPicker(context);
@@ -492,7 +477,7 @@ public class DaysFragment extends Fragment {
 //								}
 //
 //								LensDAO lensDAO = LensDAO.getInstance(context);
-//								LensVO lensVO = lensDAO.getLastLens();
+//								LensStatusVO lensVO = lensDAO.getLastLens();
 //								lensDAO.updateDaysNotUsed(num, side,
 //										lensVO.getId());
 //
@@ -509,5 +494,5 @@ public class DaysFragment extends Fragment {
 //						});
 //		AlertDialog alertDialog = dialog.create();
 //		alertDialog.show();
-	}
+    }
 }
