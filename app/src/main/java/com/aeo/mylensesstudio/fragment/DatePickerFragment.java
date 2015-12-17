@@ -68,14 +68,14 @@ public class DatePickerFragment extends DialogFragment implements
         // Fragment of lenses/replacement date
         if (tag.equals(LeftPeriodFragment.DATE_LEFT_EYE)) {
             ViewPager mViewPager = (ViewPager) getActivity().findViewById(
-                    R.id.pagerPeriodLenses);
+                    R.id.pagerTimeLenses);
             int index = mViewPager.getCurrentItem();
             PeriodLensesCollectionPagerAdapter adapter = ((PeriodLensesCollectionPagerAdapter) mViewPager
                     .getAdapter());
             fragment = (LeftPeriodFragment) adapter.getFragment(index);
         } else if (tag.equals(RightPeriodFragment.DATE_RIGHT_EYE)) {
             ViewPager mViewPager = (ViewPager) getActivity().findViewById(
-                    R.id.pagerPeriodLenses);
+                    R.id.pagerTimeLenses);
             int index = mViewPager.getCurrentItem();
             PeriodLensesCollectionPagerAdapter adapter = ((PeriodLensesCollectionPagerAdapter) mViewPager
                     .getAdapter());

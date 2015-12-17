@@ -3,6 +3,7 @@ package com.aeo.mylensesstudio.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,8 +18,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.aeo.mylensesstudio.R;
+import com.aeo.mylensesstudio.slidetab.SlidingTabLayout;
 
-public class FragmentStatus extends Fragment {
+public class StatusFragment extends Fragment {
 
     private TextView tvDaysRemainingLeftEye;
     private TextView tvDaysRemainingRightEye;
@@ -102,6 +104,14 @@ public class FragmentStatus extends Fragment {
         bundle.putString("color_url", "0033FF");
 
         animation = AnimationUtils.loadAnimation(context, R.anim.scale);
+
+        //Retira Tab referente ao Fragment do Periodo das lentes
+        View viewMain = getActivity().findViewById(R.id.drawer_layout);
+        SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) viewMain.findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setViewPager(null);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.hide();
 
         return view;
     }

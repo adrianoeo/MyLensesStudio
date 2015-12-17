@@ -7,8 +7,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 
 import com.aeo.mylensesstudio.R;
-import com.aeo.mylensesstudio.fragment.FragmentListReplaceLens;
-import com.aeo.mylensesstudio.fragment.FragmentStatus;
+import com.aeo.mylensesstudio.fragment.ListReplaceLensFragment;
+import com.aeo.mylensesstudio.fragment.StatusFragment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,10 +45,10 @@ public abstract class Utility {
 
     public static void setScreen(int id, Toolbar toolbar, FragmentManager fm) {
         if (id == R.id.nav_status) {
-            replaceFragment(new FragmentStatus(), fm);
+            replaceFragment(new StatusFragment(), fm);
             toolbar.setTitle(R.string.nav_status);
         } else if (id == R.id.nav_periodo) {
-            replaceFragment(new FragmentListReplaceLens(), fm);
+            replaceFragment(new ListReplaceLensFragment(), fm);
             toolbar.setTitle(R.string.nav_periodo);
         } else if (id == R.id.nav_dados) {
             toolbar.setTitle(R.string.nav_dados);
@@ -61,7 +61,7 @@ public abstract class Utility {
         }
     }
 
-    private static void replaceFragment(Fragment fragment, FragmentManager fm) {
+    public static void replaceFragment(Fragment fragment, FragmentManager fm) {
         FragmentTransaction trans = fm.beginTransaction();
 
         trans.replace(R.id.fragment_container, fragment);

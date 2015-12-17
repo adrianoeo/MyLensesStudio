@@ -96,10 +96,10 @@ public class MainActivity extends AppCompatActivity
 /*
     private void setScreen(int id) {
         if (id == R.id.nav_status) {
-            replaceFragment(new FragmentStatus());
+            replaceFragment(new StatusFragment());
             toolbar.setTitle(R.string.nav_status);
         } else if (id == R.id.nav_periodo) {
-            replaceFragment(new FragmentListReplaceLens());
+            replaceFragment(new ListReplaceLensFragment());
             toolbar.setTitle(R.string.nav_periodo);
         } else if (id == R.id.nav_dados) {
             toolbar.setTitle(R.string.nav_dados);

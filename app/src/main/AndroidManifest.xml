@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.aeo.mylensesstudio.activity.TimeLensActivity">
+            android:name=".activity.TimeLensActivityDEL"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

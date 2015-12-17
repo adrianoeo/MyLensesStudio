@@ -81,7 +81,7 @@ public class LeftPeriodFragment extends DialogFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		view = inflater.inflate(R.layout.fragment_left_period, container, false);
+		view = inflater.inflate(R.layout.fragment_left_time, container, false);
 		getActivity().getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 

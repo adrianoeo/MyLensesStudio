@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +17,7 @@ import com.aeo.mylensesstudio.R;
 import com.aeo.mylensesstudio.adapter.PeriodLensesCollectionPagerAdapter;
 import com.aeo.mylensesstudio.util.Utility;
 
-public class TimeLensActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class TimeLensActivity2DEL extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String TAG_LENS = "TAG_LENS";
 
     PeriodLensesCollectionPagerAdapter periodLensesCollectionPagerAdapter;
@@ -32,23 +33,29 @@ public class TimeLensActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_time_lens);
+
+        setContentView(R.layout.activity_time_lens_del);
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbarTimeLenses);
-//        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.nav_periodo);
+//        setSupportActionBar(toolbar);]
+//        getSupportActionBar().setTitle(R.string.nav_periodo);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_time_lenses);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle =
+                new ActionBarDrawerToggle(
+                        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_time_lenses);
         navigationView.setNavigationItemSelectedListener(this);
-        periodLensesCollectionPagerAdapter
-                = new PeriodLensesCollectionPagerAdapter(getSupportFragmentManager());
 
- /*       viewPager = (ViewPager) findViewById(R.id.pagerPeriodLenses);
+        periodLensesCollectionPagerAdapter
+                = new PeriodLensesCollectionPagerAdapter(getSupportFragmentManager(), getApplicationContext());
+
+        viewPager = (ViewPager) findViewById(R.id.pagerPeriodLenses);
         viewPager.setAdapter(periodLensesCollectionPagerAdapter);
 
         final ActionBar actionBar = getSupportActionBar();
@@ -84,7 +91,7 @@ public class TimeLensActivity extends AppCompatActivity implements NavigationVie
                 .setTabListener(tabListener));
 
         actionBar.addTab(actionBar.newTab().setText(R.string.tabRightLens)
-                .setTabListener(tabListener));*/
+                .setTabListener(tabListener));
     }
 
 //	private void replaceFragment(Fragment fragment) {
@@ -120,7 +127,7 @@ public class TimeLensActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_time_lenses);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
