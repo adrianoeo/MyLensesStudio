@@ -6,12 +6,18 @@
 
     <string name="action_settings">Configurações</string>
 
+    <!-- Novos -->
     <string name="nav_status">Status das lentes</string>
     <string name="nav_periodo">Período das lentes</string>
     <string name="nav_dados">Dados das lentes</string>
     <string name="nav_notificacao">Notificação</string>
     <string name="nav_historico">Histórico</string>
     <string name="nav_compra">Compre suas lentes</string>
+
+    <string name="title_status">Status</string>
+    <string name="title_periodo">Período</string>
+    <string name="title_dados">Dados</string>
+    <!---->
 
     <string name="menuSave">Salvar</string>
     <string name="menuEdit">Editar</string>

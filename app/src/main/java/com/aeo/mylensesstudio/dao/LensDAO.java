@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.aeo.mylensesstudio.activity.MainActivity;
 import com.aeo.mylensesstudio.db.DB;
 import com.aeo.mylensesstudio.util.Utility;
-import com.aeo.mylensesstudio.vo.LensStatusVO;
+import com.aeo.mylensesstudio.vo.TimeLensesVO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,14 +49,14 @@ public class LensDAO {
 		this.context = context;
 	}
 
-	public boolean insert(LensStatusVO lensVO) {
+	public boolean insert(TimeLensesVO lensVO) {
 		synchronized (MainActivity.sDataLock) {
 			mBackupManager.dataChanged();
 			return db.insert(tableName, null, getContentValues(lensVO)) > 0;
 		}
 	}
 
-	public boolean update(LensStatusVO lensVO) {
+	public boolean update(TimeLensesVO lensVO) {
 		synchronized (MainActivity.sDataLock) {
 			ContentValues content = new ContentValues();
 			content.put("date_left",
@@ -77,7 +77,7 @@ public class LensDAO {
 		}
 	}
 
-	public boolean incrementDaysNotUsed(LensStatusVO lensVO) {
+	public boolean incrementDaysNotUsed(TimeLensesVO lensVO) {
 		synchronized (MainActivity.sDataLock) {
 			// SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			ContentValues content = new ContentValues();
@@ -117,7 +117,7 @@ public class LensDAO {
 		}
 	}
 
-	private ContentValues getContentValues(LensStatusVO lensVO) {
+	private ContentValues getContentValues(TimeLensesVO lensVO) {
 		ContentValues content = new ContentValues();
 		content.put("date_left",
 				Utility.formatDateToSqlite(lensVO.getDateLeft()));
@@ -137,22 +137,22 @@ public class LensDAO {
 		return content;
 	}
 
-	public LensStatusVO getById(Integer id) {
+	public TimeLensesVO getById(Integer id) {
 		Cursor cursor = db.query(tableName, columns, "id=?",
 				new String[] { id.toString() }, null, null, null);
 
-		LensStatusVO vo = null;
+		TimeLensesVO vo = null;
 		if (cursor.moveToFirst()) {
 			vo = setLensStatusVO(cursor);
 		}
 		return vo;
 	}
 
-	public List<LensStatusVO> getListLens() {
+	public List<TimeLensesVO> getListLens() {
 		Cursor cursor = db.query(tableName, columns, null, null, null, null,
 				"id desc");
 
-		List<LensStatusVO> listVO = new ArrayList<LensStatusVO>();
+		List<TimeLensesVO> listVO = new ArrayList<TimeLensesVO>();
 
 		while (cursor.moveToNext()) {
 			listVO.add(setLensStatusVO(cursor));
@@ -160,8 +160,8 @@ public class LensDAO {
 		return listVO;
 	}
 
-	private LensStatusVO setLensStatusVO(Cursor cursor) {
-		LensStatusVO vo = new LensStatusVO();
+	private TimeLensesVO setLensStatusVO(Cursor cursor) {
+		TimeLensesVO vo = new TimeLensesVO();
 		vo.setId(cursor.getInt(cursor.getColumnIndex("id")));
 		vo.setDateLeft(Utility.formatDateDefault(cursor.getString(cursor
 				.getColumnIndex("date_left"))));
@@ -196,7 +196,7 @@ public class LensDAO {
 		return 0;
 	}
 
-	public LensStatusVO getLastLens() {
+	public TimeLensesVO getLastLens() {
 		Cursor cursor = db.rawQuery("select * from " + tableName
 				+ " order by id desc limit 1", null);
 
@@ -268,7 +268,7 @@ public class LensDAO {
 		int totalDaysLeft = 0;
 		int totalDaysRight = 0;
 
-		LensStatusVO lensVO = getById(id);
+		TimeLensesVO lensVO = getById(id);
 		if (lensVO != null) {
 			int expirationLeft = lensVO.getExpirationLeft();
 			int expirationRight = lensVO.getExpirationRight();
@@ -363,8 +363,8 @@ public class LensDAO {
 	}
 
 	@SuppressLint("SimpleDateFormat")
-	public void save(LensStatusVO lensVO) {
-//		LensDAO lensDAO = LensDAO.getInstance(context);
+	public void save(TimeLensesVO timeLensesVO) {
+		LensDAO lensDAO = LensDAO.getInstance(context);
 //		AlarmDAO alarmDAO = AlarmDAO.getInstance(context);
 //		LensesDataDAO lensesDataDAO = LensesDataDAO.getInstance(context);
 //
@@ -380,20 +380,20 @@ public class LensDAO {
 //					.format(new Date()));
 //		}
 //
-//		int idLens = lensVO.getId() == null ? 0 : lensVO.getId();
-//		if (idLens != 0) {
-//			// lensVO.setId(idLens);
-//			if (!lensVO.equals(lensDAO.getById(idLens))) {
-//				if (lensDAO.update(lensVO)) {
+		int idLens = timeLensesVO.getId() == null ? 0 : timeLensesVO.getId();
+		if (idLens != 0) {
+			// timeLensesVO.setId(idLens);
+			if (!timeLensesVO.equals(lensDAO.getById(idLens))) {
+				if (lensDAO.update(timeLensesVO)) {
 //					HistoryDAO.getInstance(context).insert();
 //					alarmDAO.setAlarm(idLens);
-//				}
-//			}
-//		} else {
-//			if (lensDAO.insert(lensVO)) {
+				}
+			}
+		} else {
+			if (lensDAO.insert(timeLensesVO)) {
 //				alarmDAO.setAlarm(idLens);
 //				HistoryDAO.getInstance(context).insert();
-//			}
-//		}
+			}
+		}
 	}
 }

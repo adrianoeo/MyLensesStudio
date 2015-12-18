@@ -10,16 +10,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.aeo.mylensesstudio.R;
-import com.aeo.mylensesstudio.vo.LensStatusVO;
+import com.aeo.mylensesstudio.vo.TimeLensesVO;
 
 import java.util.List;
 
 public class ListReplaceLensBaseAdapter extends BaseAdapter {
-    private List<LensStatusVO> list;
+    private List<TimeLensesVO> list;
     private Context context;
     private FragmentManager fragmentManager;
 
-    public ListReplaceLensBaseAdapter(Context context, List<LensStatusVO> list,
+    public ListReplaceLensBaseAdapter(Context context, List<TimeLensesVO> list,
                                       FragmentManager fragmentManager) {
         this.context = context;
         this.list = list;
@@ -75,7 +75,7 @@ public class ListReplaceLensBaseAdapter extends BaseAdapter {
             txtLensRight = (TextView) view
                     .findViewById(R.id.textViewDescReplaceLensRight);
 
-            LensStatusVO lenses = list.get(position);
+            TimeLensesVO lenses = list.get(position);
             String typeLeft = null;
             String typeRight = null;
 

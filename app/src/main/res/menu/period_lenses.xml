@@ -1,24 +1,30 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/menuEditLenses"
-        android:icon="@drawable/ic_action_edit"
+        android:icon="@android:drawable/ic_menu_edit"
         android:orderInCategory="1"
+        app:showAsAction="ifRoom"
         android:title="@string/menuEdit"/>
     <item
         android:id="@+id/menuDeleteLenses"
-        android:icon="@drawable/ic_action_discard"
+        android:icon="@android:drawable/ic_menu_delete"
         android:orderInCategory="2"
+        app:showAsAction="ifRoom"
         android:title="@string/menuDelete"/>
     <item
         android:id="@+id/menuSaveLenses"
-        android:icon="@drawable/ic_action_save"
+        android:icon="@android:drawable/ic_menu_save"
         android:orderInCategory="3"
+        app:showAsAction="ifRoom"
         android:title="@string/menuSave"/>
     <item
         android:id="@+id/menuCancelLenses"
-        android:icon="@drawable/ic_action_cancel"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
         android:orderInCategory="4"
+        app:showAsAction="ifRoom"
+        android:title="@string/menuCancel"/>
         android:title="@string/menuCancel"/>
 
 </menu>

@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.aeo.mylensesstudio.R;
+import com.aeo.mylensesstudio.fragment.StatusFragment;
 import com.aeo.mylensesstudio.util.Utility;
 
 public class MainActivity extends AppCompatActivity
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity
     public static final Object sDataLock = new Object();
 
     public Toolbar toolbar;
+    private boolean doubleBackToExitPressedOnce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,15 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        toolbar.setNavigationIcon(android.R.drawable.arrow_up_float);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -38,7 +49,9 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
-            Utility.setScreen(R.id.nav_status, toolbar, getSupportFragmentManager());
+//            Utility.setScreen(R.id.nav_status, toolbar, getSupportFragmentManager());
+            Utility.replaceFragmentWithoutBackStack(new StatusFragment(),
+                    getSupportFragmentManager());
         }
 
     }
@@ -51,6 +64,27 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+
+//        if (doubleBackToExitPressedOnce) {
+//            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//            if (drawer.isDrawerOpen(GravityCompat.START)) {
+//                drawer.closeDrawer(GravityCompat.START);
+//            }
+//            super.onBackPressed();
+//            return;
+//        }
+//
+//        this.doubleBackToExitPressedOnce = true;
+//        Toast.makeText(this, R.string.msg_press_once_again_to_exit,
+//                Toast.LENGTH_SHORT).show();
+//
+//        new Handler().postDelayed(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                doubleBackToExitPressedOnce = false;
+//            }
+//        }, 2000);
     }
 
     @Override
@@ -93,44 +127,6 @@ public class MainActivity extends AppCompatActivity
         return true;
 
     }
-/*
-    private void setScreen(int id) {
-        if (id == R.id.nav_status) {
-            replaceFragment(new StatusFragment());
-            toolbar.setTitle(R.string.nav_status);
-        } else if (id == R.id.nav_periodo) {
-            replaceFragment(new ListReplaceLensFragment());
-            toolbar.setTitle(R.string.nav_periodo);
-        } else if (id == R.id.nav_dados) {
-            toolbar.setTitle(R.string.nav_dados);
-        } else if (id == R.id.nav_notificacao) {
-            toolbar.setTitle(R.string.nav_notificacao);
-        } else if (id == R.id.nav_historico) {
-            toolbar.setTitle(R.string.nav_historico);
-        } else if (id == R.id.nav_compra) {
-            toolbar.setTitle(R.string.nav_compra);
-        }
-    }
-*/
-    /*
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction trans = fm.beginTransaction();
 
-        trans.replace(R.id.fragment_container, fragment);
-
-//		 * IMPORTANT: The following lines allow us to add the fragment to the
-//		 * stack and return to it later, by pressing back
-        trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-
-        // remove back stack
-        // getFragmentManager().popBackStack(null,
-        // FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-        // trans.addToBackStack(null);
-
-        trans.commit();
-    }
-*/
 
 }

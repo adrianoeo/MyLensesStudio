@@ -1,7 +1,6 @@
 package com.aeo.mylensesstudio.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ListFragment;
@@ -16,18 +15,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.aeo.mylensesstudio.R;
-import com.aeo.mylensesstudio.activity.TimeLensActivityDEL;
 import com.aeo.mylensesstudio.adapter.ListReplaceLensBaseAdapter;
 import com.aeo.mylensesstudio.dao.LensDAO;
 import com.aeo.mylensesstudio.slidetab.SlidingTabLayout;
 import com.aeo.mylensesstudio.util.Utility;
-import com.aeo.mylensesstudio.vo.LensStatusVO;
+import com.aeo.mylensesstudio.vo.TimeLensesVO;
 
 import java.util.List;
 
 public class ListReplaceLensFragment extends ListFragment {
 
-    public static List<LensStatusVO> listLenses;
+    public static List<TimeLensesVO> listLenses;
     ListReplaceLensBaseAdapter mListAdapter;
     public static final String TAG_LENS = "TAG_LENS";
 
@@ -35,7 +33,7 @@ public class ListReplaceLensFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        List<LensStatusVO> listLens = LensDAO.getInstance(getContext()).getListLens();
+        List<TimeLensesVO> listLens = LensDAO.getInstance(getContext()).getListLens();
 
         if (listLens != null && listLens.size() == 0) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -49,6 +47,9 @@ public class ListReplaceLensFragment extends ListFragment {
         View viewMain = getActivity().findViewById(R.id.drawer_layout);
         SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) viewMain.findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(null);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.hide();
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -66,14 +67,17 @@ public class ListReplaceLensFragment extends ListFragment {
 
         if (idLens != null) {
 //            startActivity(Integer.valueOf(idLens.getText().toString()));
+            TimeLensesFragment fragment
+                    = TimeLensesFragment.newInstance(Integer.parseInt(idLens.getText().toString()));
+            Utility.replaceFragment(fragment, getFragmentManager());
         }
     }
 
-    private void startActivity(int idLens) {
-        Intent intent = new Intent(getContext(), TimeLensActivityDEL.class);
-        intent.putExtra("ID_LENS", idLens);
-        startActivity(intent);
-    }
+//    private void startActivity(int idLens) {
+//        Intent intent = new Intent(getContext(), TimeLensActivityDEL.class);
+//        intent.putExtra("ID_LENS", idLens);
+//        startActivity(intent);
+//    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -92,6 +96,13 @@ public class ListReplaceLensFragment extends ListFragment {
             case R.id.menuInsertLens:
 //                startActivity(new Intent(getContext(), TimeLensActivityDEL.class));
                 Utility.replaceFragment(new TimeLensesFragment(), getFragmentManager());
+
+//                FragmentTransaction trans = getFragmentManager().beginTransaction();
+//                trans.replace(R.id.fragment_container, new TimeLensesFragment());
+//                trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                trans.addToBackStack(null);
+//                trans.commit();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -102,7 +113,7 @@ public class ListReplaceLensFragment extends ListFragment {
     public void onResume() {
         super.onResume();
 
-        List<LensStatusVO> listLens = LensDAO.getInstance(getContext()).getListLens();
+        List<TimeLensesVO> listLens = LensDAO.getInstance(getContext()).getListLens();
 
         if (listLens != null && listLens.size() > 0) {
             mListAdapter = new ListReplaceLensBaseAdapter(getContext(), listLens, getFragmentManager());

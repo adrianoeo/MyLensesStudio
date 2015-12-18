@@ -1,6 +1,6 @@
 package com.aeo.mylensesstudio.vo;
 
-public class LensStatusVO {
+public class TimeLensesVO {
 
 	private Integer id;
 	private String dateLeft;
@@ -145,7 +145,7 @@ public class LensStatusVO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		LensStatusVO other = (LensStatusVO) obj;
+		TimeLensesVO other = (TimeLensesVO) obj;
 		if (dateLeft == null) {
 			if (other.dateLeft != null)
 				return false;

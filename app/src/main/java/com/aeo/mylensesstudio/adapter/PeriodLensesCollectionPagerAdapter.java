@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
 import com.aeo.mylensesstudio.R;
-import com.aeo.mylensesstudio.fragment.LeftPeriodFragment;
-import com.aeo.mylensesstudio.fragment.RightPeriodFragment;
+import com.aeo.mylensesstudio.fragment.LeftTimeFragment;
+import com.aeo.mylensesstudio.fragment.RightTimeFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,20 +21,24 @@ public class PeriodLensesCollectionPagerAdapter extends FragmentStatePagerAdapte
 	private Map<Integer, Fragment> mPageReferenceMap = new HashMap<Integer, Fragment>();
 
     private Context context;
+	private int idLenses;
 
-	public PeriodLensesCollectionPagerAdapter(FragmentManager fm, Context context) {
+	public PeriodLensesCollectionPagerAdapter(FragmentManager fm, Context context, int idLenses) {
         super(fm);
         this.context = context;
+		this.idLenses = idLenses;
 	}
 
 	@Override
 	public Fragment getItem(int position) {
 		Fragment fragment = null;
 		if (position == 0) {
-			fragment = new LeftPeriodFragment();
+//			fragment = new LeftTimeFragment();
+			fragment = LeftTimeFragment.newInstance(idLenses);
 			mPageReferenceMap.put(position, fragment);
 		} else {
-			fragment = new RightPeriodFragment();
+//			fragment = new RightTimeFragment();
+			fragment = RightTimeFragment.newInstance(idLenses);
 			mPageReferenceMap.put(position, fragment);
 		}
 		return fragment;
@@ -60,10 +64,10 @@ public class PeriodLensesCollectionPagerAdapter extends FragmentStatePagerAdapte
 		String title = null;
 		switch (position) {
 			case 0 :
-				title = context.getString(R.string.str_left);
+				title = context.getString(R.string.tabLeftLens);
 				break;
 			case 1 :
-				title = context.getString(R.string.str_right);
+				title = context.getString(R.string.tabRightLens);
 				break;
 		}
 

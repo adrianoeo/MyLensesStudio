@@ -157,7 +157,7 @@ public class StatusFragment extends Fragment {
     }
 
 //	@SuppressLint("ResourceAsColor")
-//	public void setDays(LensStatusVO lensVO) {
+//	public void setDays(TimeLensesVO timeLensesVO) {
 //		LensDAO dao = LensDAO.getInstance(context);
 //
 //		int idLenses = dao.getLastIdLens();
@@ -200,7 +200,7 @@ public class StatusFragment extends Fragment {
 //					R.color.black));
 //		}
 //
-//		boolean isLeftVisible = lensVO != null && lensVO.getInUseLeft() == 1;
+//		boolean isLeftVisible = timeLensesVO != null && timeLensesVO.getInUseLeft() == 1;
 //
 //		tvDaysRemainingLeftEye.setVisibility(isLeftVisible ? View.VISIBLE
 //				: View.INVISIBLE);
@@ -245,7 +245,7 @@ public class StatusFragment extends Fragment {
 //					R.color.black));
 //		}
 //
-//		boolean isRightVisible = lensVO != null && lensVO.getInUseRight() == 1;
+//		boolean isRightVisible = timeLensesVO != null && timeLensesVO.getInUseRight() == 1;
 //
 //		tvDaysRemainingRightEye.setVisibility(isRightVisible ? View.VISIBLE
 //				: View.INVISIBLE);
@@ -257,17 +257,17 @@ public class StatusFragment extends Fragment {
 //		}
 //
 //		// Labels
-//		tvLeftEye.setVisibility(lensVO != null ? View.VISIBLE : View.INVISIBLE);
+//		tvLeftEye.setVisibility(timeLensesVO != null ? View.VISIBLE : View.INVISIBLE);
 //		tvRightEye
-//				.setVisibility(lensVO != null ? View.VISIBLE : View.INVISIBLE);
-//		view1.setVisibility(lensVO != null ? View.VISIBLE : View.INVISIBLE);
-//		view2.setVisibility(lensVO != null ? View.VISIBLE : View.INVISIBLE);
+//				.setVisibility(timeLensesVO != null ? View.VISIBLE : View.INVISIBLE);
+//		view1.setVisibility(timeLensesVO != null ? View.VISIBLE : View.INVISIBLE);
+//		view2.setVisibility(timeLensesVO != null ? View.VISIBLE : View.INVISIBLE);
 //
-//		tvEmpty.setVisibility(lensVO == null ? View.VISIBLE : View.GONE);
+//		tvEmpty.setVisibility(timeLensesVO == null ? View.VISIBLE : View.GONE);
 //
 //	}
 
-//	public void setNumUnitsLenses(LensStatusVO lensVO) {
+//	public void setNumUnitsLenses(TimeLensesVO timeLensesVO) {
 //		LensesVO lensesDataVO = LensesDataDAO.getInstance(context)
 //				.getLastLenses();
 //
@@ -320,14 +320,14 @@ public class StatusFragment extends Fragment {
 //				tvStrUnitsRight.setAnimation(animation);
 //			}
 //
-//			boolean isLeftVisible = lensVO != null
-//					&& lensVO.getInUseLeft() == 1
+//			boolean isLeftVisible = timeLensesVO != null
+//					&& timeLensesVO.getInUseLeft() == 1
 //			/* && lensesDataVO.getNumber_units_left() > 0 */;
 //
 //			setVisibleUnitLeft(isLeftVisible ? View.VISIBLE : View.INVISIBLE);
 //
-//			boolean isRightVisible = lensVO != null
-//					&& lensVO.getInUseRight() == 1
+//			boolean isRightVisible = timeLensesVO != null
+//					&& timeLensesVO.getInUseRight() == 1
 //			/* && lensesDataVO.getNumber_units_right() > 0 */;
 //
 //			setVisibleUnitRight(isRightVisible ? View.VISIBLE : View.INVISIBLE);
@@ -340,8 +340,8 @@ public class StatusFragment extends Fragment {
 //				tvStrUnitsRight.clearAnimation();
 //			}
 //
-//			view2.setVisibility(lensVO != null
-//					&& (lensVO.getInUseLeft() == 1 || lensVO.getInUseRight() == 1)
+//			view2.setVisibility(timeLensesVO != null
+//					&& (timeLensesVO.getInUseLeft() == 1 || timeLensesVO.getInUseRight() == 1)
 //					&& (tvStrUnitsLeft.getVisibility() == View.VISIBLE || tvStrUnitsRight
 //							.getVisibility() == View.VISIBLE) ? View.VISIBLE
 //					: View.GONE);
@@ -352,11 +352,11 @@ public class StatusFragment extends Fragment {
 //		}
 //	}
 
-//	private void setDaysNotUsed(LensStatusVO lensVO) {
+//	private void setDaysNotUsed(TimeLensesVO timeLensesVO) {
 //
-//		if (lensVO != null) {
+//		if (timeLensesVO != null) {
 //			// Left
-//			int daysNotUsedLeft = lensVO.getNumDaysNotUsedLeft();
+//			int daysNotUsedLeft = timeLensesVO.getNumDaysNotUsedLeft();
 //			btnDaysNotUsedLeft.setText(String.valueOf(daysNotUsedLeft));
 //
 //			int strLeft = daysNotUsedLeft != 1 ? R.string.str_days_not_used
@@ -364,15 +364,15 @@ public class StatusFragment extends Fragment {
 //			tvStrDaysNotUsedLeft.setText(strLeft);
 //
 //			// Right
-//			int daysNotUsedRight = lensVO.getNumDaysNotUsedRight();
+//			int daysNotUsedRight = timeLensesVO.getNumDaysNotUsedRight();
 //			btnDaysNotUsedRight.setText(String.valueOf(daysNotUsedRight));
 //
 //			int strRight = daysNotUsedRight != 1 ? R.string.str_days_not_used
 //					: R.string.str_day_not_used;
 //			tvStrDaysNotUsedRight.setText(strRight);
 //
-//			int left = lensVO.getInUseLeft();
-//			int right = lensVO.getInUseRight();
+//			int left = timeLensesVO.getInUseLeft();
+//			int right = timeLensesVO.getInUseRight();
 //
 //			btnDaysNotUsedLeft.setVisibility(left == 1 ? View.VISIBLE
 //					: View.INVISIBLE);
@@ -405,11 +405,11 @@ public class StatusFragment extends Fragment {
     public void onResume() {
         super.onResume();
 //		LensDAO lensDAO = LensDAO.getInstance(context);
-//		LensStatusVO lensVO = lensDAO.getLastLens();
+//		TimeLensesVO timeLensesVO = lensDAO.getLastLens();
 //
-//		setDays(lensVO);
-//		setNumUnitsLenses(lensVO);
-//		setDaysNotUsed(lensVO);
+//		setDays(timeLensesVO);
+//		setNumUnitsLenses(timeLensesVO);
+//		setDaysNotUsed(timeLensesVO);
 //
 //		if (adView != null) {
 //			adView.resume();
@@ -487,13 +487,13 @@ public class StatusFragment extends Fragment {
 //								}
 //
 //								LensDAO lensDAO = LensDAO.getInstance(context);
-//								LensStatusVO lensVO = lensDAO.getLastLens();
+//								TimeLensesVO timeLensesVO = lensDAO.getLastLens();
 //								lensDAO.updateDaysNotUsed(num, side,
-//										lensVO.getId());
+//										timeLensesVO.getId());
 //
-//								setDays(lensVO);
+//								setDays(timeLensesVO);
 //								AlarmDAO.getInstance(context).setAlarm(
-//										lensVO.getId());
+//										timeLensesVO.getId());
 //							}
 //						})
 //				.setNegativeButton(R.string.btn_cancel,
