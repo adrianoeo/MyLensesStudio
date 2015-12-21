@@ -25,7 +25,7 @@ public class LensDAO {
 	private static String[] columns = { "id", "date_left", "date_right",
 			"expiration_left", "expiration_right", "type_left", "type_right",
 			"num_days_not_used_left", "num_days_not_used_right", "in_use_left",
-			"in_use_right", "count_unit_left", "count_unit_right" };
+			"in_use_right", "count_unit_left", "count_unit_right", "qtd_left", "qtd_right" };
 	private SQLiteDatabase db;
 	private static LensDAO instance;
 	public static final String LEFT = "LEFT";
@@ -71,6 +71,8 @@ public class LensDAO {
 			content.put("in_use_right", lensVO.getInUseRight());
 			content.put("count_unit_left", lensVO.getCountUnitLeft());
 			content.put("count_unit_right", lensVO.getCountUnitRight());
+			content.put("qtd_left", lensVO.getQtdLeft());
+			content.put("qtd_right", lensVO.getQtdRight());
 			mBackupManager.dataChanged();
 			return db.update(tableName, content, "id=?", new String[] { lensVO
 					.getId().toString() }) > 0;
@@ -133,6 +135,8 @@ public class LensDAO {
 		content.put("in_use_right", lensVO.getInUseRight());
 		content.put("count_unit_left", lensVO.getCountUnitLeft());
 		content.put("count_unit_right", lensVO.getCountUnitRight());
+		content.put("qtd_left", lensVO.getQtdLeft());
+		content.put("qtd_right", lensVO.getQtdRight());
 
 		return content;
 	}
@@ -183,6 +187,8 @@ public class LensDAO {
 				.getColumnIndex("num_days_not_used_left")));
 		vo.setNumDaysNotUsedRight(cursor.getInt(cursor
 				.getColumnIndex("num_days_not_used_right")));
+		vo.setQtdLeft(cursor.getInt(cursor.getColumnIndex("qtd_left")));
+		vo.setQtdRight(cursor.getInt(cursor.getColumnIndex("qtd_right")));
 
 		return vo;
 	}

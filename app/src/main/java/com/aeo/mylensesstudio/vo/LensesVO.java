@@ -25,6 +25,11 @@ public class LensesVO {
 	private String add_right;
 	private String date_ini_right;
 	private Integer number_units_right;
+	private Double bc_left;
+	private Double bc_right;
+	private Double dia_left;
+	private Double dia_right;
+
 	public Integer getId() {
 		return id;
 	}
@@ -162,5 +167,37 @@ public class LensesVO {
 	}
 	public void setNumber_units_right(Integer number_units_right) {
 		this.number_units_right = number_units_right;
+	}
+
+	public Double getBc_left() {
+		return bc_left;
+	}
+
+	public void setBc_left(Double bc_left) {
+		this.bc_left = bc_left;
+	}
+
+	public Double getBc_right() {
+		return bc_right;
+	}
+
+	public void setBc_right(Double bc_right) {
+		this.bc_right = bc_right;
+	}
+
+	public Double getDia_left() {
+		return dia_left;
+	}
+
+	public void setDia_left(Double dia_left) {
+		this.dia_left = dia_left;
+	}
+
+	public Double getDia_right() {
+		return dia_right;
+	}
+
+	public void setDia_right(Double dia_right) {
+		this.dia_right = dia_right;
 	}
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,13 +51,13 @@ public class TimeLensesFragment extends Fragment {
     private static Button btnDateLeft;
     private static NumberPicker numberPickerLeft;
     private static CheckBox cbInUseLeft;
-    private static CheckBox cbCountUnitLeft;
+    private static NumberPicker qtdLeft;
     private static Spinner spinnerLeft;
 
     private static Button btnDateRight;
     private static NumberPicker numberPickerRight;
     private static CheckBox cbInUseRight;
-    private static CheckBox cbCountUnitRight;
+    private static NumberPicker qtdRight;
     private static Spinner spinnerRight;
 
     public static final String DATE_LEFT_EYE = "DATE_LEFT_EYE";
@@ -115,7 +116,24 @@ public class TimeLensesFragment extends Fragment {
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.hide();
 
+        Toolbar toolbar = (Toolbar) viewMain.findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        toolbar.setNavigationContentDescription(R.string.title_periodo);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                returnPreviousFragment();
+            }
+        });
+
         return view;
+    }
+
+    private void returnPreviousFragment() {
+        if (getFragmentManager() != null) {
+            getFragmentManager().popBackStack();
+        }
     }
 
     @Override
@@ -169,11 +187,11 @@ public class TimeLensesFragment extends Fragment {
         switch (item.getItemId()) {
             case android.R.id.home:
                 saveLens();
-                getFragmentManager().popBackStack();
+                returnPreviousFragment();
                 return true;
             case R.id.menuSaveLenses:
                 saveLens();
-                getFragmentManager().popBackStack();
+                returnPreviousFragment();
                 return true;
             case R.id.menuEditLenses:
                 enableControls(true);
@@ -182,7 +200,7 @@ public class TimeLensesFragment extends Fragment {
                 enableMenuSaveCancel(true);
                 return true;
             case R.id.menuCancelLenses:
-                getFragmentManager().popBackStack();
+                returnPreviousFragment();
                 return true;
             case R.id.menuDeleteLenses:
                 deleteLens(idLenses);
@@ -202,8 +220,8 @@ public class TimeLensesFragment extends Fragment {
             spinnerRight.setEnabled(enabled);
             cbInUseLeft.setEnabled(enabled);
             cbInUseRight.setEnabled(enabled);
-            cbCountUnitLeft.setEnabled(enabled);
-            cbCountUnitRight.setEnabled(enabled);
+            qtdLeft.setEnabled(enabled);
+            qtdRight.setEnabled(enabled);
         }
     }
 
@@ -231,7 +249,7 @@ public class TimeLensesFragment extends Fragment {
 //						AlarmDAO alarmDAO = AlarmDAO.getInstance(context);
 //						alarmDAO.setAlarm(lensDAO.getLastIdLens());
 
-                        getFragmentManager().popBackStack();
+//                        getFragmentManager().popBackStack();
                     }
                 });
         builder.setNegativeButton(R.string.btn_no, null);
@@ -245,12 +263,14 @@ public class TimeLensesFragment extends Fragment {
         if (leftFragment != null) {
             View leftView = leftFragment.getView();
 
-            spinnerLeft = (Spinner) leftView.findViewById(R.id.spinnerLeft);
-            numberPickerLeft = (NumberPicker) leftView
-                    .findViewById(R.id.numberPickerLeft);
-            btnDateLeft = (Button) leftView.findViewById(R.id.btnDateLeft);
-            cbInUseLeft = (CheckBox) leftView.findViewById(R.id.cbxWearLeft);
-            cbCountUnitLeft = (CheckBox) leftView.findViewById(R.id.cbxCountUnitLeft);
+            if (leftView != null) {
+                spinnerLeft = (Spinner) leftView.findViewById(R.id.spinnerLeft);
+                numberPickerLeft = (NumberPicker) leftView
+                        .findViewById(R.id.numberPickerLeft);
+                btnDateLeft = (Button) leftView.findViewById(R.id.btnDateLeft);
+                cbInUseLeft = (CheckBox) leftView.findViewById(R.id.cbxWearLeft);
+                qtdLeft = (NumberPicker) leftView.findViewById(R.id.qtdLeft);
+            }
         }
 
         Fragment rightFragment = periodLensesCollectionPagerAdapter.getFragment(1);
@@ -258,12 +278,14 @@ public class TimeLensesFragment extends Fragment {
         if (rightFragment != null) {
             View rightView = rightFragment.getView();
 
-            spinnerRight = (Spinner) rightView.findViewById(R.id.spinnerRight);
-            numberPickerRight = (NumberPicker) rightView
-                    .findViewById(R.id.numberPickerRight);
-            btnDateRight = (Button) rightView.findViewById(R.id.btnDateRight);
-            cbInUseRight = (CheckBox) rightView.findViewById(R.id.cbxWearRight);
-            cbCountUnitRight = (CheckBox) rightView.findViewById(R.id.cbxCountUnitRight);
+            if (rightView != null) {
+                spinnerRight = (Spinner) rightView.findViewById(R.id.spinnerRight);
+                numberPickerRight = (NumberPicker) rightView
+                        .findViewById(R.id.numberPickerRight);
+                btnDateRight = (Button) rightView.findViewById(R.id.btnDateRight);
+                cbInUseRight = (CheckBox) rightView.findViewById(R.id.cbxWearRight);
+                qtdRight = (NumberPicker) rightView.findViewById(R.id.qtdRight);
+            }
         }
 
         return leftFragment != null && rightFragment != null;
@@ -280,8 +302,8 @@ public class TimeLensesFragment extends Fragment {
         timeLensesVO.setTypeRight(spinnerRight.getSelectedItemPosition());
         timeLensesVO.setInUseLeft(cbInUseLeft.isChecked() ? 1 : 0);
         timeLensesVO.setInUseRight(cbInUseRight.isChecked() ? 1 : 0);
-        timeLensesVO.setCountUnitLeft(cbCountUnitLeft.isChecked() ? 1 : 0);
-        timeLensesVO.setCountUnitRight(cbCountUnitRight.isChecked() ? 1 : 0);
+        timeLensesVO.setQtdLeft(qtdLeft.getValue());
+        timeLensesVO.setQtdRight(qtdRight.getValue());
 
         if (idLenses != 0) {
             timeLensesVO.setId(idLenses);

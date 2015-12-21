@@ -9,18 +9,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.aeo.mylensesstudio.util.Utility;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class DB extends SQLiteOpenHelper {
 
 	public static final String DB_NAME = "mylenses.db";
 	public static final String TABLE_NAME_LENS = "lens";
 	public static final String TABLE_NAME_REG_LENSES = "reg_lenses";
 	public static final String TABLE_NAME_HISTORY = "history";
-	private static final String SQL_LENS = "CREATE TABLE [lens] ([id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, [date_left] VARCHAR2(10), [date_right] VARCHAR2(10), [expiration_left] INTEGER, [expiration_right] INTEGER, [type_left] INTEGER, [type_right] INTEGER, [num_days_not_used_left] INTEGER DEFAULT 0, [num_days_not_used_right] INTEGER DEFAULT 0, [in_use_left] INTEGER, [in_use_right] INTEGER, [count_unit_left] INTEGER DEFAULT 1, [count_unit_right] INTEGER DEFAULT 1);";
+	private static final String SQL_LENS = "CREATE TABLE [lens] ([id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, [date_left] VARCHAR2(10), [date_right] VARCHAR2(10), [expiration_left] INTEGER, [expiration_right] INTEGER, [type_left] INTEGER, [type_right] INTEGER, [num_days_not_used_left] INTEGER DEFAULT 0, [num_days_not_used_right] INTEGER DEFAULT 0, [in_use_left] INTEGER, [in_use_right] INTEGER, [count_unit_left] INTEGER DEFAULT 1, [count_unit_right] INTEGER DEFAULT 1, [qtd_left] INTEGER DEFAULT 1, [qtd_right] INTEGER DEFAULT 1);";
 	private static final String SQL_ALARM = "CREATE TABLE [alarm] ([hour] INTEGER, [minute] INTEGER, [days_before] INTEGER, [remind_every_day] INTEGER);";
-	private static final String SQL_REG_LENSES = "CREATE TABLE [reg_lenses] ([id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, [description_left] VARCHAR2(200), [brand_left] VARCHAR2(50), [discard_type_left] INTEGER, [type_left] INTEGER, [power_left] INTEGER, [cylinder_left] INTEGER, [axis_left] INTEGER, [add_left] INTEGER, [buy_site_left] VARCHAR2(100), [date_ini_left] VARCHAR2(10), [number_units_left] INTEGER, [description_right] VARCHAR2(200), [brand_right] VARCHAR2(50), [discard_type_right] INTEGER, [type_right] INTEGER, [power_right] INTEGER, [cylinder_right] INTEGER, [axis_right] INTEGER, [add_right] INTEGER, [buy_site_right] VARCHAR2(100), [date_ini_right] VARCHAR2(10), [number_units_right] INTEGER);";
+	private static final String SQL_REG_LENSES = "CREATE TABLE [reg_lenses] ([id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, [description_left] VARCHAR2(200), [brand_left] VARCHAR2(50), [discard_type_left] INTEGER, [type_left] INTEGER, [power_left] INTEGER, [cylinder_left] INTEGER, [axis_left] INTEGER, [add_left] INTEGER, [buy_site_left] VARCHAR2(100), [date_ini_left] VARCHAR2(10), [number_units_left] INTEGER, [description_right] VARCHAR2(200), [brand_right] VARCHAR2(50), [discard_type_right] INTEGER, [type_right] INTEGER, [power_right] INTEGER, [cylinder_right] INTEGER, [axis_right] INTEGER, [add_right] INTEGER, [buy_site_right] VARCHAR2(100), [date_ini_right] VARCHAR2(10), [number_units_right] INTEGER, [bc_left] REAL, [bc_right] REAL, [dia_left] REAL, [dia_right] REAL);";
 	private static final String SQL_HISTORY = "CREATE TABLE [history] ([id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, [id_lens] INTEGER, [id_reg_lenses] INTEGER, [date_hist] VARCHAR2(10), [date_left] VARCHAR2(10), [date_right] VARCHAR2(10), [expiration_left] INTEGER, [expiration_right] INTEGER, [type_time_left] INTEGER, [type_time_right] INTEGER, [num_days_not_used_left] INTEGER, [num_days_not_used_right] INTEGER, [in_use_left] INTEGER, [in_use_right] INTEGER, [description_left] VARCHAR2(200), [brand_left] VARCHAR2(50), [discard_type_left] INTEGER, [type_left] INTEGER, [power_left] INTEGER, [cylinder_left] INTEGER, [axis_left] INTEGER, [add_left] INTEGER, [buy_site_left] VARCHAR2(100), [date_ini_left] VARCHAR2(10), [number_units_left] INTEGER, [description_right] VARCHAR2(200), [brand_right] VARCHAR2(50), [discard_type_right] INTEGER, [type_right] INTEGER, [power_right] INTEGER, [cylinder_right] INTEGER, [axis_right] INTEGER, [add_right] INTEGER, [buy_site_right] VARCHAR2(100), [date_ini_right] VARCHAR2(10), [number_units_right] INTEGER);";
 	private static final String SQL_DROP_LENS = "DROP TABLE [lens];";
 	private static final String SQL_DROP_ALARM = "DROP TABLE [alarm];";
@@ -30,10 +27,17 @@ public class DB extends SQLiteOpenHelper {
 	private static final String SQL_ALTER_TABLE_LENS_4 = "alter table lens add column in_use_right INTEGER;";
 	private static final String SQL_ALTER_TABLE_LENS_5 = "alter table lens add column count_unit_left INTEGER DEFAULT 1;";
 	private static final String SQL_ALTER_TABLE_LENS_6 = "alter table lens add column count_unit_right INTEGER DEFAULT 1;";
+	private static final String SQL_ALTER_TABLE_LENS_7 = "alter table lens add column qtd_left INTEGER DEFAULT 1;";
+	private static final String SQL_ALTER_TABLE_LENS_8 = "alter table lens add column qtd_right INTEGER DEFAULT 1;";
 	private static final String SQL_ATER_TABLE_ALARM_1 = "alter table alarm add column remind_every_day INTEGER DEFAULT 1;";
+	private static final String SQL_ALTER_TABLE_REG_LENS_1 = "alter table reg_lenses add column bc_left REAL;";
+	private static final String SQL_ALTER_TABLE_REG_LENS_2 = "alter table reg_lenses add column bc_right REAL;";
+	private static final String SQL_ALTER_TABLE_REG_LENS_3 = "alter table reg_lenses add column dia_left REAL;";
+	private static final String SQL_ALTER_TABLE_REG_LENS_4 = "alter table reg_lenses add column dia_right REAL;";
 	private static final int VERSION_1 = 1;
 	private static final int VERSION_2 = 2;
 	private static final int VERSION_3 = 3;
+	private static final int VERSION_4 = 4;
 	private static final String SQL_INSERT_ALARM = "INSERT INTO [alarm] (hour, minute, days_before, remind_every_day) values (12, 0, 0, 1);";
 	private static final String SQL_UPDATE_ALARM = "UPDATE [alarm] SET remind_every_day = 1;";
 
@@ -43,7 +47,7 @@ public class DB extends SQLiteOpenHelper {
 			"in_use_right" };
 
 	public DB(Context context) {
-		super(context, DB_NAME, null, VERSION_3);
+		super(context, DB_NAME, null, VERSION_4);
 	}
 
 	@SuppressLint("SimpleDateFormat")
@@ -56,14 +60,14 @@ public class DB extends SQLiteOpenHelper {
 		db.execSQL(SQL_INSERT_ALARM);
 
 		// Insert lenses data with currency date and 6 units
-		ContentValues content = new ContentValues();
-		content.put("date_ini_left",
-				new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-		content.put("date_ini_right",
-				new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-		content.put("number_units_left", "6");
-		content.put("number_units_right", "6");
-		db.insert(TABLE_NAME_REG_LENSES, null, content);
+//		ContentValues content = new ContentValues();
+//		content.put("date_ini_left",
+//				new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+//		content.put("date_ini_right",
+//				new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+//		content.put("number_units_left", "6");
+//		content.put("number_units_right", "6");
+//		db.insert(TABLE_NAME_REG_LENSES, null, content);
 
 	}
 
@@ -80,6 +84,17 @@ public class DB extends SQLiteOpenHelper {
 			db.execSQL(SQL_DROP_ALARM);
 			onCreate(db);
 			setVersion3(db);
+		} else if (oldVersion == VERSION_1 && newVersion == VERSION_4) {
+			db.execSQL(SQL_DROP_LENS);
+			db.execSQL(SQL_DROP_ALARM);
+			onCreate(db);
+			setVersion3(db);
+			setVersion4(db);
+		} else if (oldVersion == VERSION_2 && newVersion == VERSION_4) {
+			setVersion3(db);
+			setVersion4(db);
+		} else if (oldVersion == VERSION_3 && newVersion == VERSION_4) {
+			setVersion4(db);
 		}
 	}
 	
@@ -169,4 +184,14 @@ public class DB extends SQLiteOpenHelper {
 			db.insert(TABLE_NAME_HISTORY, null, content2);
 		}
 	}
+
+	private void setVersion4(SQLiteDatabase db) {
+		db.execSQL(SQL_ALTER_TABLE_LENS_7);
+		db.execSQL(SQL_ALTER_TABLE_LENS_8);
+		db.execSQL(SQL_ALTER_TABLE_REG_LENS_1);
+		db.execSQL(SQL_ALTER_TABLE_REG_LENS_2);
+		db.execSQL(SQL_ALTER_TABLE_REG_LENS_3);
+		db.execSQL(SQL_ALTER_TABLE_REG_LENS_4);
+	}
+
 }

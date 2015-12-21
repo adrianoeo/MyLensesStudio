@@ -6,13 +6,13 @@
         android:orderInCategory="1"
         android:title="@string/menuInsert"
         app:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_add"/>
+        android:icon="@drawable/ic_add_white_24dp"/>
 
 
-    <item
-        android:id="@+id/menuHelp"
-        android:orderInCategory="6"
-        android:title="@string/menuHelp"
-        app:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_help" />
+    <!--<item-->
+        <!--android:id="@+id/menuHelp"-->
+        <!--android:orderInCategory="6"-->
+        <!--android:title="@string/menuHelp"-->
+        <!--app:showAsAction="ifRoom"-->
+        <!--android:icon="@android:drawable/ic_menu_help" />-->
 </menu>

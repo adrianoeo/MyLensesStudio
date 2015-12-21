@@ -34,7 +34,7 @@ public class RightTimeFragment extends DialogFragment {
 	private DatePickerFragment fragmentDate;
 	private static NumberPicker numberPickerRight;
 	private static CheckBox cbInUseRight;
-	private static CheckBox cbCountUnitRight;
+	private static NumberPicker qtdRight;
 	private static Spinner spinnerRight;
 
 	public static final String DATE_RIGHT_EYE = "DATE_RIGHT_EYE";
@@ -88,7 +88,7 @@ public class RightTimeFragment extends DialogFragment {
 				.findViewById(R.id.numberPickerRight);
 		btnDateRight = (Button) view.findViewById(R.id.btnDateRight);
 		cbInUseRight = (CheckBox) view.findViewById(R.id.cbxWearRight);
-		cbCountUnitRight = (CheckBox) view.findViewById(R.id.cbxCountUnitRight);
+		qtdRight = (NumberPicker) view.findViewById(R.id.qtdRight);
 
 		btnDateRight.setOnClickListener(new OnClickListener() {
 			@Override
@@ -137,6 +137,9 @@ public class RightTimeFragment extends DialogFragment {
 		numberPickerRight.setMinValue(1);
 		numberPickerRight.setMaxValue(100);
 		numberPickerRight.setWrapSelectorWheel(false);
+		qtdRight.setMinValue(1);
+		qtdRight.setMaxValue(30);
+		qtdRight.setWrapSelectorWheel(false);
 	}
 
 	private void setDate() {
@@ -160,12 +163,10 @@ public class RightTimeFragment extends DialogFragment {
 			numberPickerRight.setValue(lensVO.getExpirationRight());
 			spinnerRight.setSelection(lensVO.getTypeRight());
 			cbInUseRight.setChecked(lensVO.getInUseRight() == 1 ? true : false);
-			cbCountUnitRight.setChecked(lensVO.getCountUnitRight() == 1 ? true
-					: false);
+			qtdRight.setValue(lensVO.getQtdRight());
 		} else {
 			setDate();
 			cbInUseRight.setChecked(true);
-			cbCountUnitRight.setChecked(true);
 //			setLensStatusVO();
 		}
 	}
@@ -175,7 +176,7 @@ public class RightTimeFragment extends DialogFragment {
 		numberPickerRight.setEnabled(enabled);
 		spinnerRight.setEnabled(enabled);
 		cbInUseRight.setEnabled(enabled);
-		cbCountUnitRight.setEnabled(enabled);
+		qtdRight.setEnabled(enabled);
 	}
 
 	@Override

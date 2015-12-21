@@ -34,7 +34,7 @@ public class LeftTimeFragment extends DialogFragment {
     private DatePickerFragment fragmentDate;
     private static NumberPicker numberPickerLeft;
     private static CheckBox cbInUseLeft;
-    private static CheckBox cbCountUnitLeft;
+    private static NumberPicker qtdLeft;
     private static Spinner spinnerLeft;
 
     private MenuItem menuItemEdit;
@@ -90,7 +90,7 @@ public class LeftTimeFragment extends DialogFragment {
                 .findViewById(R.id.numberPickerLeft);
         btnDateLeft = (Button) view.findViewById(R.id.btnDateLeft);
         cbInUseLeft = (CheckBox) view.findViewById(R.id.cbxWearLeft);
-        cbCountUnitLeft = (CheckBox) view.findViewById(R.id.cbxCountUnitLeft);
+        qtdLeft = (NumberPicker) view.findViewById(R.id.qtdLeft);
 
         btnDateLeft.setOnClickListener(new OnClickListener() {
             @Override
@@ -152,6 +152,9 @@ public class LeftTimeFragment extends DialogFragment {
         numberPickerLeft.setMinValue(1);
         numberPickerLeft.setMaxValue(100);
         numberPickerLeft.setWrapSelectorWheel(false);
+        qtdLeft.setMinValue(1);
+        qtdLeft.setMaxValue(30);
+        qtdLeft.setWrapSelectorWheel(false);
     }
 
     private void setDate() {
@@ -175,11 +178,10 @@ public class LeftTimeFragment extends DialogFragment {
             numberPickerLeft.setValue(timeLensesVO.getExpirationLeft());
             spinnerLeft.setSelection(timeLensesVO.getTypeLeft());
             cbInUseLeft.setChecked(timeLensesVO.getInUseLeft() == 1 ? true : false);
-            cbCountUnitLeft.setChecked(timeLensesVO.getCountUnitLeft() == 1 ? true : false);
+            qtdLeft.setValue(timeLensesVO.getQtdLeft());
         } else {
             setDate();
             cbInUseLeft.setChecked(true);
-            cbCountUnitLeft.setChecked(true);
 //            setLensStatusVO();
         }
     }
@@ -189,7 +191,7 @@ public class LeftTimeFragment extends DialogFragment {
         numberPickerLeft.setEnabled(enabled);
         spinnerLeft.setEnabled(enabled);
         cbInUseLeft.setEnabled(enabled);
-        cbCountUnitLeft.setEnabled(enabled);
+        qtdLeft.setEnabled(enabled);
     }
 
     @Override

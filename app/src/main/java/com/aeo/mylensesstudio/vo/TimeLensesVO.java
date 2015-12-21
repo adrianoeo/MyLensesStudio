@@ -15,6 +15,8 @@ public class TimeLensesVO {
 	private int numDaysNotUsedRight;
 	private int countUnitLeft;
 	private int countUnitRight;
+	private int qtdLeft;
+	private int qtdRight;
 
 	public Integer getId() {
 		return id;
@@ -120,6 +122,22 @@ public class TimeLensesVO {
 		this.countUnitRight = countUnitRight;
 	}
 
+	public int getQtdLeft() {
+		return qtdLeft;
+	}
+
+	public void setQtdLeft(int qtdLeft) {
+		this.qtdLeft = qtdLeft;
+	}
+
+	public int getQtdRight() {
+		return qtdRight;
+	}
+
+	public void setQtdRight(int qtdRight) {
+		this.qtdRight = qtdRight;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -168,9 +186,9 @@ public class TimeLensesVO {
 			return false;
 		if (typeRight != other.typeRight)
 			return false;
-		if (countUnitLeft != other.countUnitLeft)
+		if (qtdLeft != other.qtdLeft)
 			return false;
-		if (countUnitRight != other.countUnitRight)
+		if (qtdRight != other.qtdRight)
 			return false;
 		return true;
 	}

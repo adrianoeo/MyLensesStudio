@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -51,8 +54,17 @@ public class ListReplaceLensFragment extends ListFragment {
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.hide();
 
+        Toolbar toolbar = (Toolbar) viewMain.findViewById(R.id.toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -69,7 +81,7 @@ public class ListReplaceLensFragment extends ListFragment {
 //            startActivity(Integer.valueOf(idLens.getText().toString()));
             TimeLensesFragment fragment
                     = TimeLensesFragment.newInstance(Integer.parseInt(idLens.getText().toString()));
-            Utility.replaceFragment(fragment, getFragmentManager());
+            Utility.replaceFragmentWithBackStack(fragment, getFragmentManager());
         }
     }
 
@@ -84,8 +96,8 @@ public class ListReplaceLensFragment extends ListFragment {
         MenuItem menuItemInsert = menu.findItem(R.id.menuInsertLens);
         menuItemInsert.setVisible(true);
 
-        MenuItem menuItemHelp = menu.findItem(R.id.menuHelp);
-        menuItemHelp.setVisible(false);
+//        MenuItem menuItemHelp = menu.findItem(R.id.menuHelp);
+//        menuItemHelp.setVisible(false);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -94,15 +106,7 @@ public class ListReplaceLensFragment extends ListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuInsertLens:
-//                startActivity(new Intent(getContext(), TimeLensActivityDEL.class));
-                Utility.replaceFragment(new TimeLensesFragment(), getFragmentManager());
-
-//                FragmentTransaction trans = getFragmentManager().beginTransaction();
-//                trans.replace(R.id.fragment_container, new TimeLensesFragment());
-//                trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                trans.addToBackStack(null);
-//                trans.commit();
-
+                Utility.replaceFragmentWithBackStack(new TimeLensesFragment(), getFragmentManager());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -134,10 +138,10 @@ public class ListReplaceLensFragment extends ListFragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utility.replaceFragment(new TimeLensesFragment(), getFragmentManager());
+                Utility.replaceFragmentWithBackStack(new TimeLensesFragment(), getFragmentManager());
             }
         });
-        fab.show();
+        fab.hide();
     }
 
     @Override

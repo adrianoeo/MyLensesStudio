@@ -17,6 +17,8 @@
     <string name="title_status">Status</string>
     <string name="title_periodo">Período</string>
     <string name="title_dados">Dados</string>
+
+    <string name="lblQtd">Quantidade total de lentes:</string>
     <!---->
 
     <string name="menuSave">Salvar</string>

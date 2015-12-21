@@ -45,17 +45,15 @@ public abstract class Utility {
 
     public static void setScreen(int id, Toolbar toolbar, FragmentManager fm) {
         if (id == R.id.nav_status) {
-            replaceFragmentWithoutBackStack(new StatusFragment(), fm);
+            replaceFragment(new StatusFragment(), fm);
             toolbar.setTitle(R.string.title_status);
         } else if (id == R.id.nav_periodo) {
-            replaceFragmentWithoutBackStack(new ListReplaceLensFragment(), fm);
+            replaceFragment(new ListReplaceLensFragment(), fm);
             toolbar.setTitle(R.string.title_periodo);
         } else if (id == R.id.nav_dados) {
             toolbar.setTitle(R.string.title_dados);
         } else if (id == R.id.nav_notificacao) {
             toolbar.setTitle(R.string.nav_notificacao);
-        } else if (id == R.id.nav_historico) {
-            toolbar.setTitle(R.string.nav_historico);
         } else if (id == R.id.nav_compra) {
             toolbar.setTitle(R.string.nav_compra);
         }
@@ -76,12 +74,12 @@ public abstract class Utility {
         // getFragmentManager().popBackStack(null,
         // FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-        trans.addToBackStack(null);
+//        trans.addToBackStack(null);
 
         trans.commit();
     }
 
-    public static void replaceFragmentWithoutBackStack(Fragment fragment, FragmentManager fm) {
+    public static void replaceFragmentWithBackStack(Fragment fragment, FragmentManager fm) {
         FragmentTransaction trans = fm.beginTransaction();
 
         trans.replace(R.id.fragment_container, fragment);
@@ -92,6 +90,7 @@ public abstract class Utility {
 		 */
         trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
+        trans.addToBackStack(null);
         trans.commit();
     }
 

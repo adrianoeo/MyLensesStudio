@@ -2,14 +2,14 @@
     android:id="@+id/scrollViewRating"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
+    android:layout_gravity="fill"
     android:background="@drawable/case4"
-    android:fillViewport="true" >
+    android:fillViewport="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvEmpty"
@@ -28,10 +28,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
             android:orientation="vertical"
-            android:stretchColumns="0, 1, 2, 3, 4" >
+            android:stretchColumns="0, 1, 2, 3, 4">
 
             <TableRow>
 
@@ -134,11 +134,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:text="10"
-                    android:textSize="30sp"
                     android:clickable="true"
-                    android:onClick="showMsgUnits" />
+                    android:gravity="center"
+                    android:onClick="showMsgUnits"
+                    android:text="10"
+                    android:textSize="30sp" />
 
                 <TextView android:layout_width="40dp" />
 
@@ -147,11 +147,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:text="10"
-                    android:textSize="30sp"
                     android:clickable="true"
-                    android:onClick="showMsgUnits" />
+                    android:gravity="center"
+                    android:onClick="showMsgUnits"
+                    android:text="10"
+                    android:textSize="30sp" />
 
                 <TextView android:layout_marginRight="10dp" />
             </TableRow>
@@ -200,6 +200,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:gravity="center"
+                    android:onClick="openDialogNumber"
                     android:text="10"
                     android:textSize="30sp" />
 
@@ -211,6 +212,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:gravity="center"
+                    android:onClick="openDialogNumber"
                     android:text="10"
                     android:textSize="30sp" />
 
@@ -252,8 +254,7 @@
             android:layout_alignBottom="@+id/tableLayout"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
-            android:orientation="vertical" >
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
     </RelativeLayout>
 
 </ScrollView>
