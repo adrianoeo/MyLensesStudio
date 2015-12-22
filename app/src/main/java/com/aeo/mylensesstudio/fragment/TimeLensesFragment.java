@@ -1,7 +1,6 @@
 package com.aeo.mylensesstudio.fragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -20,8 +19,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.aeo.mylensesstudio.R;
-import com.aeo.mylensesstudio.adapter.PeriodLensesCollectionPagerAdapter;
-import com.aeo.mylensesstudio.dao.LensDAO;
+import com.aeo.mylensesstudio.adapter.TimeLensesCollectionPagerAdapter;
+import com.aeo.mylensesstudio.dao.AlarmDAO;
+import com.aeo.mylensesstudio.dao.TimeLensesDAO;
 import com.aeo.mylensesstudio.slidetab.SlidingTabLayout;
 import com.aeo.mylensesstudio.vo.TimeLensesVO;
 
@@ -39,7 +39,7 @@ public class TimeLensesFragment extends Fragment {
 
 //    private OnFragmentInteractionListener mListener;
 
-    PeriodLensesCollectionPagerAdapter periodLensesCollectionPagerAdapter;
+    TimeLensesCollectionPagerAdapter timeLensesCollectionPagerAdapter;
     ViewPager mViewPager;
     private SlidingTabLayout mSlidingTabLayout;
 
@@ -60,9 +60,9 @@ public class TimeLensesFragment extends Fragment {
     private static NumberPicker qtdRight;
     private static Spinner spinnerRight;
 
-    public static final String DATE_LEFT_EYE = "DATE_LEFT_EYE";
     public static final String KEY_ID_LENS = "KEY_ID_LENS";
 
+    private static boolean isSaveVisible;
 
     public TimeLensesFragment() {
     }
@@ -101,11 +101,11 @@ public class TimeLensesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_time_lenses, container, false);
 
-        periodLensesCollectionPagerAdapter
-                = new PeriodLensesCollectionPagerAdapter(getFragmentManager(), getContext(), idLenses);
+        timeLensesCollectionPagerAdapter
+                = new TimeLensesCollectionPagerAdapter(getFragmentManager(), getContext(), idLenses);
 
         mViewPager = (ViewPager) view.findViewById(R.id.pagerTimeLenses);
-        mViewPager.setAdapter(periodLensesCollectionPagerAdapter);
+        mViewPager.setAdapter(timeLensesCollectionPagerAdapter);
 
         View viewMain = getActivity().findViewById(R.id.drawer_layout);
 
@@ -123,17 +123,14 @@ public class TimeLensesFragment extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                returnPreviousFragment();
+                if (menuItemSave != null && menuItemSave.isVisible()) {
+                    saveLens();
+                }
+                returnToPreviousFragment();
             }
         });
 
         return view;
-    }
-
-    private void returnPreviousFragment() {
-        if (getFragmentManager() != null) {
-            getFragmentManager().popBackStack();
-        }
     }
 
     @Override
@@ -143,16 +140,28 @@ public class TimeLensesFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        getActivity().getMenuInflater().inflate(R.menu.time_lenses, menu);
+        menuItemEdit = menu.findItem(R.id.menuEditLenses);
+        menuItemSave = menu.findItem(R.id.menuSaveLenses);
+        menuItemCancel = menu.findItem(R.id.menuCancelLenses);
+        menuItemDelete = menu.findItem(R.id.menuDeleteLenses);
+    }
+
+    @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         if (idLenses == 0) {
             enableMenuEdit(false);
             enableMenuSaveCancel(true);
         } else {
-            enableMenuSaveCancel(false);
-            enableMenuEdit(LensDAO.getInstance(getContext()).getLastIdLens() == idLenses);
+            enableMenuSaveCancel(isSaveVisible);
+            enableMenuEdit(TimeLensesDAO.getInstance(getContext()).getLastIdLens() == idLenses
+                    && !isSaveVisible);
         }
     }
+
 
     private void enableMenuEdit(boolean enabled) {
         if (menuItemEdit != null) {
@@ -173,37 +182,29 @@ public class TimeLensesFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        getActivity().getMenuInflater().inflate(R.menu.period_lenses, menu);
-        menuItemEdit = menu.findItem(R.id.menuEditLenses);
-        menuItemSave = menu.findItem(R.id.menuSaveLenses);
-        menuItemCancel = menu.findItem(R.id.menuCancelLenses);
-        menuItemDelete = menu.findItem(R.id.menuDeleteLenses);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                saveLens();
-                returnPreviousFragment();
+//                saveLens();
+                returnToPreviousFragment();
                 return true;
             case R.id.menuSaveLenses:
                 saveLens();
-                returnPreviousFragment();
+                returnToPreviousFragment();
                 return true;
             case R.id.menuEditLenses:
                 enableControls(true);
                 item.setVisible(false);
                 enableMenuEdit(false);
                 enableMenuSaveCancel(true);
+                isSaveVisible = true;
                 return true;
             case R.id.menuCancelLenses:
-                returnPreviousFragment();
+                returnToPreviousFragment();
                 return true;
             case R.id.menuDeleteLenses:
                 deleteLens(idLenses);
+                returnToPreviousFragment();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -225,40 +226,28 @@ public class TimeLensesFragment extends Fragment {
         }
     }
 
-
     private void saveLens() {
         if (getViewsFragmentLenses()) {
-            LensDAO lensDAO = LensDAO.getInstance(getContext());
+            TimeLensesDAO timeLensesDAO = TimeLensesDAO.getInstance(getContext());
 
-            lensDAO.save(setTimeLensesVO());
+            timeLensesDAO.save(setTimeLensesVO());
 
             Toast.makeText(getContext(), R.string.msgSaved, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void deleteLens(final int id) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage(R.string.msgDelete);
-        builder.setCancelable(true);
-        builder.setPositiveButton(R.string.btn_yes,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        LensDAO lensDAO = LensDAO.getInstance(getContext());
-                        lensDAO.delete(id);
+        Context context = getContext();
 
-//						AlarmDAO alarmDAO = AlarmDAO.getInstance(context);
-//						alarmDAO.setAlarm(lensDAO.getLastIdLens());
+        TimeLensesDAO timeLensesDAO = TimeLensesDAO.getInstance(context);
+        timeLensesDAO.delete(id);
 
-//                        getFragmentManager().popBackStack();
-                    }
-                });
-        builder.setNegativeButton(R.string.btn_no, null);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        AlarmDAO alarmDAO = AlarmDAO.getInstance(context);
+        alarmDAO.setAlarm(timeLensesDAO.getLastIdLens());
     }
 
     private boolean getViewsFragmentLenses() {
-        Fragment leftFragment = periodLensesCollectionPagerAdapter.getFragment(0);
+        Fragment leftFragment = timeLensesCollectionPagerAdapter.getFragment(0);
 
         if (leftFragment != null) {
             View leftView = leftFragment.getView();
@@ -273,7 +262,7 @@ public class TimeLensesFragment extends Fragment {
             }
         }
 
-        Fragment rightFragment = periodLensesCollectionPagerAdapter.getFragment(1);
+        Fragment rightFragment = timeLensesCollectionPagerAdapter.getFragment(1);
 
         if (rightFragment != null) {
             View rightView = rightFragment.getView();
@@ -311,43 +300,11 @@ public class TimeLensesFragment extends Fragment {
         return timeLensesVO;
     }
 
+    private void returnToPreviousFragment() {
+        if (getFragmentManager() != null) {
+            isSaveVisible = false;
+            getFragmentManager().popBackStack();
+        }
+    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-//
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

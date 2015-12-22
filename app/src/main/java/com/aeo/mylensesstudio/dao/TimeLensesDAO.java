@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.aeo.mylensesstudio.activity.MainActivity;
 import com.aeo.mylensesstudio.db.DB;
+import com.aeo.mylensesstudio.fragment.ListReplaceLensFragment;
 import com.aeo.mylensesstudio.util.Utility;
 import com.aeo.mylensesstudio.vo.TimeLensesVO;
 
@@ -19,7 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class LensDAO {
+public class TimeLensesDAO {
 
 	private static String tableName = "lens";
 	private static String[] columns = { "id", "date_left", "date_right",
@@ -27,7 +28,7 @@ public class LensDAO {
 			"num_days_not_used_left", "num_days_not_used_right", "in_use_left",
 			"in_use_right", "count_unit_left", "count_unit_right", "qtd_left", "qtd_right" };
 	private SQLiteDatabase db;
-	private static LensDAO instance;
+	private static TimeLensesDAO instance;
 	public static final String LEFT = "LEFT";
 	public static final String RIGHT = "RIGHT";
 
@@ -35,14 +36,14 @@ public class LensDAO {
 	BackupManager mBackupManager;
 	private Context context;
 
-	public static LensDAO getInstance(Context context) {
+	public static TimeLensesDAO getInstance(Context context) {
 		if (instance == null) {
-			instance = new LensDAO(context);
+			instance = new TimeLensesDAO(context);
 		}
 		return instance;
 	}
 
-	public LensDAO(Context context) {
+	public TimeLensesDAO(Context context) {
 		db = new DB(context).getWritableDatabase();
 		/** It is handy to keep a BackupManager cached */
 		mBackupManager = new BackupManager(context);
@@ -115,7 +116,7 @@ public class LensDAO {
 	public boolean delete(Integer id) {
 		synchronized (MainActivity.sDataLock) {
 			mBackupManager.dataChanged();
-			return db.delete(tableName, "id=?", new String[] { id.toString() }) > 0;
+			return db.delete(tableName, "id=?", new String[]{id.toString()}) > 0;
 		}
 	}
 
@@ -316,9 +317,22 @@ public class LensDAO {
 		return new Calendar[] { dateExpLeft, dateExpRight };
 	}
 
+	public int[] getUnitsRemaining() {
+		int unitsLeft = ListReplaceLensFragment.listLenses == null ? TimeLensesDAO.getInstance(
+				context).getLastLens().getQtdLeft() : ListReplaceLensFragment.listLenses
+				.get(0).getQtdLeft();
+
+		int unitsRight = ListReplaceLensFragment.listLenses == null ? TimeLensesDAO.getInstance(
+				context).getLastLens().getQtdRight() : ListReplaceLensFragment.listLenses
+				.get(0).getQtdRight();
+
+		return new int[] { unitsLeft, unitsRight };
+	}
+
+
 	public int getSaldoLensLeft() {
 		int totalUnitsLeft = 0;
-//		LensesVO lensesVO = LensesDataDAO.getInstance(context).getLastLenses();
+//		DataLensesVO lensesVO = LensesDataDAO.getInstance(context).getLastLenses();
 //
 //		if (lensesVO != null) {
 //			totalUnitsLeft = Integer.valueOf(context.getResources()
@@ -344,7 +358,7 @@ public class LensDAO {
 
 	public int getSaldoLensRight() {
 		int totalUnitsRight = 0;
-//		LensesVO lensesVO = LensesDataDAO.getInstance(context).getLastLenses();
+//		DataLensesVO lensesVO = LensesDataDAO.getInstance(context).getLastLenses();
 //
 //		if (lensesVO != null) {
 //			totalUnitsRight = Integer.valueOf(context.getResources()
@@ -370,17 +384,17 @@ public class LensDAO {
 
 	@SuppressLint("SimpleDateFormat")
 	public void save(TimeLensesVO timeLensesVO) {
-		LensDAO lensDAO = LensDAO.getInstance(context);
+		TimeLensesDAO timeLensesDAO = TimeLensesDAO.getInstance(context);
 //		AlarmDAO alarmDAO = AlarmDAO.getInstance(context);
 //		LensesDataDAO lensesDataDAO = LensesDataDAO.getInstance(context);
 //
 //		// When units == 0, set currency date to lenses data
-//		if (lensDAO.getSaldoLensLeft() == 0) {
+//		if (timeLensesDAO.getSaldoLensLeft() == 0) {
 //			lensesDataDAO.updateDate("date_ini_left", lensesDataDAO
 //					.getLastIdLens(), new SimpleDateFormat("yyyy-MM-dd")
 //					.format(new Date()));
 //		}
-//		if (lensDAO.getSaldoLensRight() == 0) {
+//		if (timeLensesDAO.getSaldoLensRight() == 0) {
 //			lensesDataDAO.updateDate("date_ini_right", lensesDataDAO
 //					.getLastIdLens(), new SimpleDateFormat("yyyy-MM-dd")
 //					.format(new Date()));
@@ -389,14 +403,14 @@ public class LensDAO {
 		int idLens = timeLensesVO.getId() == null ? 0 : timeLensesVO.getId();
 		if (idLens != 0) {
 			// timeLensesVO.setId(idLens);
-			if (!timeLensesVO.equals(lensDAO.getById(idLens))) {
-				if (lensDAO.update(timeLensesVO)) {
+			if (!timeLensesVO.equals(timeLensesDAO.getById(idLens))) {
+				if (timeLensesDAO.update(timeLensesVO)) {
 //					HistoryDAO.getInstance(context).insert();
 //					alarmDAO.setAlarm(idLens);
 				}
 			}
 		} else {
-			if (lensDAO.insert(timeLensesVO)) {
+			if (timeLensesDAO.insert(timeLensesVO)) {
 //				alarmDAO.setAlarm(idLens);
 //				HistoryDAO.getInstance(context).insert();
 			}

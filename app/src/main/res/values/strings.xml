@@ -19,6 +19,8 @@
     <string name="title_dados">Dados</string>
 
     <string name="lblQtd">Quantidade total de lentes:</string>
+    <string name="lbl_bc">BC</string>
+    <string name="lbl_dia">DIA</string>
     <!---->
 
     <string name="menuSave">Salvar</string>

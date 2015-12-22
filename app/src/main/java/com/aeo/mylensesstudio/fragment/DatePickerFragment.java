@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 
 import com.aeo.mylensesstudio.R;
-import com.aeo.mylensesstudio.adapter.PeriodLensesCollectionPagerAdapter;
-import com.aeo.mylensesstudio.dao.LensDAO;
+import com.aeo.mylensesstudio.adapter.TimeLensesCollectionPagerAdapter;
+import com.aeo.mylensesstudio.dao.TimeLensesDAO;
 import com.aeo.mylensesstudio.vo.TimeLensesVO;
 
 import java.text.ParseException;
@@ -70,33 +70,33 @@ public class DatePickerFragment extends DialogFragment implements
             ViewPager mViewPager = (ViewPager) getActivity().findViewById(
                     R.id.pagerTimeLenses);
             int index = mViewPager.getCurrentItem();
-            PeriodLensesCollectionPagerAdapter adapter = ((PeriodLensesCollectionPagerAdapter) mViewPager
+            TimeLensesCollectionPagerAdapter adapter = ((TimeLensesCollectionPagerAdapter) mViewPager
                     .getAdapter());
             fragment = (LeftTimeFragment) adapter.getFragment(index);
         } else if (tag.equals(RightTimeFragment.DATE_RIGHT_EYE)) {
             ViewPager mViewPager = (ViewPager) getActivity().findViewById(
                     R.id.pagerTimeLenses);
             int index = mViewPager.getCurrentItem();
-            PeriodLensesCollectionPagerAdapter adapter = ((PeriodLensesCollectionPagerAdapter) mViewPager
+            TimeLensesCollectionPagerAdapter adapter = ((TimeLensesCollectionPagerAdapter) mViewPager
                     .getAdapter());
             fragment = (RightTimeFragment) adapter.getFragment(index);
         } // Fragment of left lens data
-        /*else if (tag.equals(LensLeftEyeFragment.DATE_LENS_LEFT)) {
+        /*else if (tag.equals(LeftDataFragment.DATE_LENS_LEFT)) {
 			ViewPager mViewPager = (ViewPager) getActivity().findViewById(
 					R.id.pagerLenses);
 			int index = mViewPager.getCurrentItem();
 			LensesCollectionPagerAdapter adapter = ((LensesCollectionPagerAdapter) mViewPager
 					.getAdapter());
-			fragment = (LensLeftEyeFragment) adapter.getFragment(index);
+			fragment = (LeftDataFragment) adapter.getFragment(index);
 
 		} // Fragment of right lens data
-		else if (tag.equals(LensRightEyeFragment.DATE_LENS_RIGHT)) {
+		else if (tag.equals(RightDataFragment.DATE_LENS_RIGHT)) {
 			ViewPager mViewPager = (ViewPager) getActivity().findViewById(
 					R.id.pagerLenses);
 			int index = mViewPager.getCurrentItem();
 			LensesCollectionPagerAdapter adapter = ((LensesCollectionPagerAdapter) mViewPager
 					.getAdapter());
-			fragment = (LensRightEyeFragment) adapter.getFragment(index);
+			fragment = (RightDataFragment) adapter.getFragment(index);
 		}
 */
         this.day = day;
@@ -115,11 +115,11 @@ public class DatePickerFragment extends DialogFragment implements
             btnDateRight = (Button) fragment.getView().findViewById(
                     R.id.btnDateRight);
             btnDateRight.setText(strDate);
-        } /*else if (tag.equals(LensLeftEyeFragment.DATE_LENS_LEFT)) {
+        } /*else if (tag.equals(LeftDataFragment.DATE_LENS_LEFT)) {
 			btnDateIniLeft = (Button) fragment.getView().findViewById(
 					R.id.btnDateIniLeft);
 			btnDateIniLeft.setText(strDate);
-		} else if (tag.equals(LensRightEyeFragment.DATE_LENS_RIGHT)) {
+		} else if (tag.equals(RightDataFragment.DATE_LENS_RIGHT)) {
 			btnDateIniRight = (Button) fragment.getView().findViewById(
 					R.id.btnDateIniRight);
 			btnDateIniRight.setText(strDate);
@@ -128,7 +128,7 @@ public class DatePickerFragment extends DialogFragment implements
 
     @SuppressLint("SimpleDateFormat")
     private Date getDate() {
-        LensDAO dao = LensDAO.getInstance(getActivity());
+        TimeLensesDAO dao = TimeLensesDAO.getInstance(getActivity());
         TimeLensesVO timeLensesVO = dao.getById(LeftTimeFragment.idLenses);
         if (timeLensesVO != null) {
             if (tag.equals(LeftTimeFragment.DATE_LEFT_EYE)) {

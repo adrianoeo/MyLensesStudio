@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.aeo.mylensesstudio.R;
 import com.aeo.mylensesstudio.adapter.ListReplaceLensBaseAdapter;
-import com.aeo.mylensesstudio.dao.LensDAO;
+import com.aeo.mylensesstudio.dao.TimeLensesDAO;
 import com.aeo.mylensesstudio.slidetab.SlidingTabLayout;
 import com.aeo.mylensesstudio.util.Utility;
 import com.aeo.mylensesstudio.vo.TimeLensesVO;
@@ -36,7 +36,7 @@ public class ListReplaceLensFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        List<TimeLensesVO> listLens = LensDAO.getInstance(getContext()).getListLens();
+        List<TimeLensesVO> listLens = TimeLensesDAO.getInstance(getContext()).getListLens();
 
         if (listLens != null && listLens.size() == 0) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -117,7 +117,7 @@ public class ListReplaceLensFragment extends ListFragment {
     public void onResume() {
         super.onResume();
 
-        List<TimeLensesVO> listLens = LensDAO.getInstance(getContext()).getListLens();
+        List<TimeLensesVO> listLens = TimeLensesDAO.getInstance(getContext()).getListLens();
 
         if (listLens != null && listLens.size() > 0) {
             mListAdapter = new ListReplaceLensBaseAdapter(getContext(), listLens, getFragmentManager());

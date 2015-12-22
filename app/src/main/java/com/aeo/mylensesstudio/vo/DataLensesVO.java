@@ -1,6 +1,6 @@
 package com.aeo.mylensesstudio.vo;
 
-public class LensesVO {
+public class DataLensesVO {
 
 	private Integer id;
 	private String brand_left;

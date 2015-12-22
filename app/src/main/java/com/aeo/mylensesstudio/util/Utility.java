@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 
 import com.aeo.mylensesstudio.R;
+import com.aeo.mylensesstudio.fragment.DataLensesFragment;
 import com.aeo.mylensesstudio.fragment.ListReplaceLensFragment;
 import com.aeo.mylensesstudio.fragment.StatusFragment;
 
@@ -51,6 +52,7 @@ public abstract class Utility {
             replaceFragment(new ListReplaceLensFragment(), fm);
             toolbar.setTitle(R.string.title_periodo);
         } else if (id == R.id.nav_dados) {
+            replaceFragment(new DataLensesFragment(), fm);
             toolbar.setTitle(R.string.title_dados);
         } else if (id == R.id.nav_notificacao) {
             toolbar.setTitle(R.string.nav_notificacao);

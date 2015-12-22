@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.aeo.mylensesstudio.dao.AlarmDAO;
-import com.aeo.mylensesstudio.dao.LensDAO;
+import com.aeo.mylensesstudio.dao.TimeLensesDAO;
 import com.aeo.mylensesstudio.fragment.ListReplaceLensFragment;
 import com.aeo.mylensesstudio.vo.AlarmVO;
 
@@ -15,7 +15,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
 
-			int idLenses = ListReplaceLensFragment.listLenses == null ? LensDAO.getInstance(
+			int idLenses = ListReplaceLensFragment.listLenses == null ? TimeLensesDAO.getInstance(
 					context).getLastIdLens() : ListReplaceLensFragment.listLenses
 					.get(0).getId();
 
@@ -24,9 +24,9 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
 			
 			//Daily notification
 			AlarmVO alarmVO = alarmDAO.getAlarm();
-			LensDAO lensDAO = LensDAO.getInstance(context);
+			TimeLensesDAO timeLensesDAO = TimeLensesDAO.getInstance(context);
 			if (alarmVO.getRemindEveryDay() == 1) {
-				Long[] daysToExpire = lensDAO.getDaysToExpire(idLenses);
+				Long[] daysToExpire = timeLensesDAO.getDaysToExpire(idLenses);
 
 				if (daysToExpire[0] > 0 || daysToExpire[1] > 0) {
 					alarmDAO.setAlarmManagerDaily(alarmVO.getHour(), alarmVO.getMinute());

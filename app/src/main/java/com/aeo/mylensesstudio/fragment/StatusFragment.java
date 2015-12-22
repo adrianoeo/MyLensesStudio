@@ -23,10 +23,8 @@ import android.widget.TextView;
 
 import com.aeo.mylensesstudio.R;
 import com.aeo.mylensesstudio.dao.AlarmDAO;
-import com.aeo.mylensesstudio.dao.LensDAO;
-import com.aeo.mylensesstudio.dao.LensesDataDAO;
+import com.aeo.mylensesstudio.dao.TimeLensesDAO;
 import com.aeo.mylensesstudio.slidetab.SlidingTabLayout;
-import com.aeo.mylensesstudio.vo.LensesVO;
 import com.aeo.mylensesstudio.vo.TimeLensesVO;
 
 public class StatusFragment extends Fragment {
@@ -167,7 +165,7 @@ public class StatusFragment extends Fragment {
 
 	@SuppressLint("ResourceAsColor")
 	public void setDays(TimeLensesVO timeLensesVO) {
-		LensDAO dao = LensDAO.getInstance(getContext());
+		TimeLensesDAO dao = TimeLensesDAO.getInstance(getContext());
 
 		int idLenses = dao.getLastIdLens();
 
@@ -277,20 +275,8 @@ public class StatusFragment extends Fragment {
 	}
 
 	public void setNumUnitsLenses(TimeLensesVO timeLensesVO) {
-		LensesVO lensesDataVO = LensesDataDAO.getInstance(getContext())
-				.getLastLenses();
-
-		if (lensesDataVO != null) {
-//			int countUnitsLeft = LensDAO.getInstance(context)
-//					.getSaldoLensLeft();
-//			int countUnitsRight = LensDAO.getInstance(context)
-//					.getSaldoLensRight();
-
-//			int unitsLeft = countUnitsLeft < 0 ? 0 : countUnitsLeft;
-//			int unitsRight = countUnitsRight < 0 ? 0 : countUnitsRight;
-
-			int[] unitsRemaining = LensesDataDAO.getInstance(getContext()).getUnitsRemaining();
-
+		if (timeLensesVO != null) {
+			int[] unitsRemaining = TimeLensesDAO.getInstance(getContext()).getUnitsRemaining();
 
 			int unitsLeft = unitsRemaining[0] < 0 ? 0 : unitsRemaining[0];
 			int unitsRight = unitsRemaining[1] < 0 ? 0 : unitsRemaining[1];
@@ -415,8 +401,8 @@ public class StatusFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-		LensDAO lensDAO = LensDAO.getInstance(context);
-		TimeLensesVO timeLensesVO = lensDAO.getLastLens();
+		TimeLensesDAO timeLensesDAO = TimeLensesDAO.getInstance(context);
+		TimeLensesVO timeLensesVO = timeLensesDAO.getLastLens();
 
 		setDays(timeLensesVO);
 		setNumUnitsLenses(timeLensesVO);
@@ -489,17 +475,17 @@ public class StatusFragment extends Fragment {
 									btnDaysNotUsedLeft.setText(String
 											.valueOf(num));
 									tvStrDaysNotUsedLeft.setText(str);
-									side = LensDAO.LEFT;
+									side = TimeLensesDAO.LEFT;
 								} else if (v.getId() == R.id.btnDaysNotUsedRight) {
 									btnDaysNotUsedRight.setText(String
 											.valueOf(num));
 									tvStrDaysNotUsedRight.setText(str);
-									side = LensDAO.RIGHT;
+									side = TimeLensesDAO.RIGHT;
 								}
 
-								LensDAO lensDAO = LensDAO.getInstance(context);
-								TimeLensesVO timeLensesVO = lensDAO.getLastLens();
-								lensDAO.updateDaysNotUsed(num, side,
+								TimeLensesDAO timeLensesDAO = TimeLensesDAO.getInstance(context);
+								TimeLensesVO timeLensesVO = timeLensesDAO.getLastLens();
+								timeLensesDAO.updateDaysNotUsed(num, side,
 										timeLensesVO.getId());
 
 								setDays(timeLensesVO);

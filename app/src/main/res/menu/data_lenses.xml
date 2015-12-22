@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuEditDataLenses"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:orderInCategory="1"
+        android:title="@string/menuEdit"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menuSaveDataLenses"
+        android:icon="@android:drawable/ic_menu_save"
+        android:orderInCategory="3"
+        android:title="@string/menuSave"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menuCancelDataLenses"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:orderInCategory="4"
+        android:title="@string/menuCancel"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuShareDataLenses"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"
+        android:icon="@android:drawable/ic_menu_share"
+        android:orderInCategory="5"
+        android:title="@string/menuShare"
+        app:showAsAction="ifRoom" />
+
+</menu>

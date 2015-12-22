@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aeo.mylensesstudio">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,6 +23,41 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name="com.aeo.mylensesstudio.service.ServiceChangeLens"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/service_name" >
+            <intent-filter>
+                <action android:name="START_SERVICE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.aeo.mylensesstudio.service.ServiceWearLens"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/service_daily_name" >
+            <intent-filter>
+                <action android:name="START_SERVICE_WEAR_DAILY" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name="com.aeo.mylensesstudio.service.AlarmBroadcastReceiver" />
+        <receiver android:name="com.aeo.mylensesstudio.service.DailyAlarmBroadcastReceiver" />
+        <receiver android:name="com.aeo.mylensesstudio.service.NotificationBroadcastReceiver" />
+        <receiver android:name="com.aeo.mylensesstudio.service.DailyNotificationBroadcastReceiver" />
+        <receiver
+            android:name="com.aeo.mylensesstudio.service.BootBroadcastReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" >
+                </action>
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.google.android.backup.api_key"
+            android:value="AEdPqrEAAAAI6UO5_dahb_ynWawxuHX0v2uImK12Xw8zIMTgnw" />
+
     </application>
 
 </manifest>

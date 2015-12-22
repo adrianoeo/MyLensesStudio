@@ -95,8 +95,8 @@ public class AlarmDAO {
 		cancelAlarm();
 		cancelAlarmDaily();
 
-		LensDAO lensDAO = LensDAO.getInstance(context);
-		Calendar[] calendars = lensDAO.getDateAlarm(idLens);
+		TimeLensesDAO timeLensesDAO = TimeLensesDAO.getInstance(context);
+		Calendar[] calendars = timeLensesDAO.getDateAlarm(idLens);
 
 		AlarmDAO alarmDAO = AlarmDAO.getInstance(context);
 		AlarmVO alarmVO = alarmDAO.getAlarm();
@@ -151,7 +151,7 @@ public class AlarmDAO {
 
 		// Start daily notification if is checked and not expired
 		if (alarmVO.getRemindEveryDay() == 1) {
-			Long[] daysToExpire = lensDAO.getDaysToExpire(lensDAO
+			Long[] daysToExpire = timeLensesDAO.getDaysToExpire(timeLensesDAO
 					.getLastIdLens());
 
 			if (daysToExpire[0] > 0 || daysToExpire[1] > 0) {
@@ -231,7 +231,7 @@ public class AlarmDAO {
 
 	public void setAlarmNextDay(int idLens) {
 		// Days to expire
-		Long[] daysToExpire = LensDAO.getInstance(context).getDaysToExpire(
+		Long[] daysToExpire = TimeLensesDAO.getInstance(context).getDaysToExpire(
 				idLens);
 
 		Long daysToExpireLeft = daysToExpire[0];

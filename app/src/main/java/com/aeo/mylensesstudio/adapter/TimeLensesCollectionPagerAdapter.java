@@ -14,7 +14,7 @@ import com.aeo.mylensesstudio.fragment.RightTimeFragment;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PeriodLensesCollectionPagerAdapter extends FragmentStatePagerAdapter {
+public class TimeLensesCollectionPagerAdapter extends FragmentStatePagerAdapter {
 
 	private static final int NUMBER_FRAGMENTS = 2;
 	@SuppressLint("UseSparseArrays")
@@ -23,7 +23,7 @@ public class PeriodLensesCollectionPagerAdapter extends FragmentStatePagerAdapte
     private Context context;
 	private int idLenses;
 
-	public PeriodLensesCollectionPagerAdapter(FragmentManager fm, Context context, int idLenses) {
+	public TimeLensesCollectionPagerAdapter(FragmentManager fm, Context context, int idLenses) {
         super(fm);
         this.context = context;
 		this.idLenses = idLenses;
@@ -33,11 +33,9 @@ public class PeriodLensesCollectionPagerAdapter extends FragmentStatePagerAdapte
 	public Fragment getItem(int position) {
 		Fragment fragment = null;
 		if (position == 0) {
-//			fragment = new LeftTimeFragment();
 			fragment = LeftTimeFragment.newInstance(idLenses);
 			mPageReferenceMap.put(position, fragment);
 		} else {
-//			fragment = new RightTimeFragment();
 			fragment = RightTimeFragment.newInstance(idLenses);
 			mPageReferenceMap.put(position, fragment);
 		}

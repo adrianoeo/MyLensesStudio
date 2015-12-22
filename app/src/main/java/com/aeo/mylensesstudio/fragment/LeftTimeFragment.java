@@ -19,7 +19,7 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 
 import com.aeo.mylensesstudio.R;
-import com.aeo.mylensesstudio.dao.LensDAO;
+import com.aeo.mylensesstudio.dao.TimeLensesDAO;
 import com.aeo.mylensesstudio.vo.TimeLensesVO;
 
 import java.text.ParseException;
@@ -114,7 +114,6 @@ public class LeftTimeFragment extends DialogFragment {
 
         setHasOptionsMenu(true);
 
-        // setDate();
         setNumberPicker();
         setSpinnerDiscard();
         setLensValues();
@@ -171,7 +170,7 @@ public class LeftTimeFragment extends DialogFragment {
     }
 
     private void setLensValues() {
-        LensDAO dao = LensDAO.getInstance(context);
+        TimeLensesDAO dao = TimeLensesDAO.getInstance(context);
         timeLensesVO = dao.getById(idLenses);
         if (timeLensesVO != null) {
             btnDateLeft.setText(timeLensesVO.getDateLeft());

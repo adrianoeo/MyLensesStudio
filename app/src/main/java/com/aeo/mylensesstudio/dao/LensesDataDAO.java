@@ -9,9 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.aeo.mylensesstudio.activity.MainActivity;
 import com.aeo.mylensesstudio.db.DB;
-import com.aeo.mylensesstudio.fragment.ListReplaceLensFragment;
 import com.aeo.mylensesstudio.util.Utility;
-import com.aeo.mylensesstudio.vo.LensesVO;
+import com.aeo.mylensesstudio.vo.DataLensesVO;
 
 public class LensesDataDAO {
 
@@ -41,7 +40,7 @@ public class LensesDataDAO {
 		mBackupManager = new BackupManager(context);
 	}
 
-	public boolean insert(LensesVO vo) {
+	public boolean insert(DataLensesVO vo) {
 		synchronized (MainActivity.sDataLock) {
 			ContentValues content = getContentValues(vo);
 
@@ -50,7 +49,7 @@ public class LensesDataDAO {
 		}
 	}
 
-	public boolean update(LensesVO vo) {
+	public boolean update(DataLensesVO vo) {
 		synchronized (MainActivity.sDataLock) {
 			ContentValues content = getContentValues(vo);
 
@@ -60,7 +59,7 @@ public class LensesDataDAO {
 		}
 	}
 
-	private ContentValues getContentValues(LensesVO vo) {
+	private ContentValues getContentValues(DataLensesVO vo) {
 		ContentValues content = new ContentValues();
 		content.put("description_left", vo.getDescription_left().trim());
 		content.put("brand_left", vo.getBrand_left().trim());
@@ -93,31 +92,31 @@ public class LensesDataDAO {
 		return content;
 	}
 
-	public LensesVO getById(Integer id) {
+	public DataLensesVO getById(Integer id) {
 		Cursor rs = db.query(tableName, columns, "id=?",
 				new String[] { id.toString() }, null, null, null);
 
-		LensesVO vo = null;
+		DataLensesVO vo = null;
 		if (rs.moveToFirst()) {
 			vo = setLensesVO(rs);
 		}
 		return vo;
 	}
 
-	public LensesVO getLastLenses() {
+	public DataLensesVO getLastLenses() {
 		Cursor c = db.rawQuery("select * from " + tableName
 				+ " order by id desc limit 1", null);
 
-		LensesVO vo = null;
+		DataLensesVO vo = null;
 		if (c.moveToFirst()) {
 			vo = setLensesVO(c);
 		}
 		return vo;
 	}
 
-	private LensesVO setLensesVO(Cursor c) {
-		LensesVO vo;
-		vo = new LensesVO();
+	private DataLensesVO setLensesVO(Cursor c) {
+		DataLensesVO vo;
+		vo = new DataLensesVO();
 		vo.setId(c.getInt(c.getColumnIndex("id")));
 		vo.setDescription_left(c.getString(c.getColumnIndex("description_left")));
 		vo.setBrand_left(c.getString(c.getColumnIndex("brand_left")));
@@ -162,23 +161,24 @@ public class LensesDataDAO {
 		}
 		return 0;
 	}
-
+/*
 	public int[] getUnitsRemaining() {
 //		HistoryDAO dao = HistoryDAO.getInstance(context);
 //		int unitsLeft = dao.getSaldoLensLeft();
 //		int unitsRight = dao.getSaldoLensRight();
 
-		int unitsLeft = ListReplaceLensFragment.listLenses == null ? LensDAO.getInstance(
+		int unitsLeft = ListReplaceLensFragment.listLenses == null ? TimeLensesDAO.getInstance(
 				context).getLastLens().getQtdLeft() : ListReplaceLensFragment.listLenses
 				.get(0).getQtdLeft();
 
-		int unitsRight = ListReplaceLensFragment.listLenses == null ? LensDAO.getInstance(
+		int unitsRight = ListReplaceLensFragment.listLenses == null ? TimeLensesDAO.getInstance(
 				context).getLastLens().getQtdRight() : ListReplaceLensFragment.listLenses
 				.get(0).getQtdRight();
 
 		return new int[] { unitsLeft, unitsRight };
 	}
-	
+*/
+
 	@SuppressLint("SimpleDateFormat")
 	public boolean updateDate(String column, int idLensesData, String date) {
 		synchronized (MainActivity.sDataLock) {
