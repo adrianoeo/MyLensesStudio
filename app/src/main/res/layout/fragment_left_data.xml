@@ -17,8 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-
-            android:text="@string/lbl_brand" />
+            android:text="@string/lbl_brand"
+            android:textColor="@color/color_selector" />
 
         <AutoCompleteTextView
             android:id="@+id/editTextLeftBrand"
@@ -27,7 +27,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:completionThreshold="1"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="@color/color_selector" />
 
         <TextView
             android:id="@+id/textView1"
@@ -35,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-
-            android:text="@string/lbl_desc_lens" />
+            android:text="@string/lbl_desc_lens"
+            android:textColor="@color/color_selector" />
 
         <EditText
             android:id="@+id/EditTextDescLeft"
@@ -44,7 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="@color/color_selector" />
 
         <TextView
             android:id="@+id/TextView08"
@@ -52,8 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-
-            android:text="@string/lbl_type_lens" />
+            android:text="@string/lbl_type_lens"
+            android:textColor="@color/color_selector" />
 
         <Spinner
             android:id="@+id/spinnerTypeLensLeft"
@@ -83,9 +85,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-
                     android:gravity="center_horizontal"
-                    android:text="@string/lbl_power" />
+                    android:text="@string/lbl_power"
+                    android:textColor="@color/color_selector" />
 
                 <Spinner
                     android:id="@+id/spinnerPowerLeft"
@@ -107,8 +109,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-
-                    android:text="@string/lbl_add" />
+                    android:text="@string/lbl_add"
+                    android:textColor="@color/color_selector" />
 
                 <Spinner
                     android:id="@+id/spinnerAddLeft"
@@ -139,9 +141,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-
                     android:gravity="center_horizontal"
-                    android:text="@string/lbl_cylinder" />
+                    android:text="@string/lbl_cylinder"
+                    android:textColor="@color/color_selector" />
 
                 <Spinner
                     android:id="@+id/spinnerCylinderLeft"
@@ -163,9 +165,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-
                     android:gravity="center_horizontal"
-                    android:text="@string/lbl_axis" />
+                    android:text="@string/lbl_axis"
+                    android:textColor="@color/color_selector" />
 
                 <Spinner
                     android:id="@+id/spinnerAxisLeft"
@@ -198,14 +200,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center_horizontal"
-                    android:text="@string/lbl_bc" />
+                    android:text="@string/lbl_bc"
+                    android:textColor="@color/color_selector" />
 
                 <EditText
                     android:id="@+id/editTextBCLeft"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/color_selector" />
             </LinearLayout>
 
             <LinearLayout
@@ -220,16 +224,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-
                     android:gravity="center_horizontal"
-                    android:text="@string/lbl_dia" />
+                    android:text="@string/lbl_dia"
+                    android:textColor="@color/color_selector" />
 
                 <EditText
                     android:id="@+id/editTextDiaLeft"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/color_selector" />
             </LinearLayout>
         </LinearLayout>
 
@@ -239,8 +244,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-
-            android:text="@string/lbl_buy_site" />
+            android:text="@string/lbl_buy_site"
+            android:textColor="@color/color_selector" />
 
         <EditText
             android:id="@+id/EditTextBuySiteLeft"
@@ -248,7 +253,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:inputType="textUri" />
+            android:inputType="textUri"
+            android:textColor="@color/color_selector" />
     </LinearLayout>
 
 </ScrollView>

@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.aeo.mylensesstudio.fragment.TimeLensesFragment">
+    tools:context="com.aeo.mylenses.fragment.TimeLensesFragment">
 
-    <!--    <com.aeo.mylensesstudio.slidetab.SlidingTabLayout
+    <!--    <mylensestab.SlidingTabLayout
             android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />-->

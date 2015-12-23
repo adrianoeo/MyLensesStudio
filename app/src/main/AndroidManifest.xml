@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.aeo.mylensesstudio">
+    package="com.aeo.mylenses">
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,13 +9,16 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:backupAgent="com.aeo.mylenses.backup.MyBackupAgent"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.aeo.mylensesstudio.activity.MainActivity"
+            android:name="com.aeo.mylenses.activity.MainActivity"
+            android:configChanges="orientation"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,32 +28,31 @@
         </activity>
 
         <service
-            android:name="com.aeo.mylensesstudio.service.ServiceChangeLens"
+            android:name="com.aeo.mylenses.service.ServiceChangeLens"
             android:icon="@drawable/ic_launcher"
-            android:label="@string/service_name" >
+            android:label="@string/service_name">
             <intent-filter>
                 <action android:name="START_SERVICE" />
             </intent-filter>
         </service>
         <service
-            android:name="com.aeo.mylensesstudio.service.ServiceWearLens"
+            android:name="com.aeo.mylenses.service.ServiceWearLens"
             android:icon="@drawable/ic_launcher"
-            android:label="@string/service_daily_name" >
+            android:label="@string/service_daily_name">
             <intent-filter>
                 <action android:name="START_SERVICE_WEAR_DAILY" />
             </intent-filter>
         </service>
 
-        <receiver android:name="com.aeo.mylensesstudio.service.AlarmBroadcastReceiver" />
-        <receiver android:name="com.aeo.mylensesstudio.service.DailyAlarmBroadcastReceiver" />
-        <receiver android:name="com.aeo.mylensesstudio.service.NotificationBroadcastReceiver" />
-        <receiver android:name="com.aeo.mylensesstudio.service.DailyNotificationBroadcastReceiver" />
+        <receiver android:name="com.aeo.mylenses.service.AlarmBroadcastReceiver" />
+        <receiver android:name="com.aeo.mylenses.service.DailyAlarmBroadcastReceiver" />
+        <receiver android:name="com.aeo.mylenses.service.NotificationBroadcastReceiver" />
+        <receiver android:name="com.aeo.mylenses.service.DailyNotificationBroadcastReceiver" />
         <receiver
-            android:name="com.aeo.mylensesstudio.service.BootBroadcastReceiver"
-            android:enabled="true" >
+            android:name="com.aeo.mylenses.service.BootBroadcastReceiver"
+            android:enabled="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" >
-                </action>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
             </intent-filter>
         </receiver>
 

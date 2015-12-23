@@ -1,4 +1,4 @@
-package com.aeo.mylensesstudio.mylensesstudio;
+package com.aeo.mylenses.mylensesstudio;
 
 import org.junit.Test;
 

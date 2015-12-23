@@ -17,8 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-
-            android:text="@string/lbl_brand" />
+            android:text="@string/lbl_brand"
+            android:textColor="@color/color_selector" />
 
         <AutoCompleteTextView
             android:id="@+id/editTextRightBrand"
@@ -35,8 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-
-            android:text="@string/lbl_desc_lens" />
+            android:text="@string/lbl_desc_lens"
+            android:textColor="@color/color_selector" />
 
         <EditText
             android:id="@+id/EditTextDescRight"
@@ -44,7 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="@color/color_selector" />
 
         <TextView
             android:id="@+id/TextView08"
@@ -52,8 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-
-            android:text="@string/lbl_type_lens" />
+            android:text="@string/lbl_type_lens"
+            android:textColor="@color/color_selector" />
 
         <Spinner
             android:id="@+id/spinnerTypeLensRight"
@@ -83,9 +84,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-
                     android:gravity="center_horizontal"
-                    android:text="@string/lbl_power" />
+                    android:text="@string/lbl_power"
+                    android:textColor="@color/color_selector" />
 
                 <Spinner
                     android:id="@+id/spinnerPowerRight"
@@ -107,8 +108,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-
-                    android:text="@string/lbl_add" />
+                    android:text="@string/lbl_add"
+                    android:textColor="@color/color_selector" />
 
                 <Spinner
                     android:id="@+id/spinnerAddRight"
@@ -139,9 +140,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-
                     android:gravity="center_horizontal"
-                    android:text="@string/lbl_cylinder" />
+                    android:text="@string/lbl_cylinder"
+                    android:textColor="@color/color_selector" />
 
                 <Spinner
                     android:id="@+id/spinnerCylinderRight"
@@ -163,9 +164,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-
                     android:gravity="center_horizontal"
-                    android:text="@string/lbl_axis" />
+                    android:text="@string/lbl_axis"
+                    android:textColor="@color/color_selector" />
 
                 <Spinner
                     android:id="@+id/spinnerAxisRight"
@@ -198,14 +199,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center_horizontal"
-                    android:text="@string/lbl_bc" />
+                    android:text="@string/lbl_bc"
+                    android:textColor="@color/color_selector" />
 
                 <EditText
                     android:id="@+id/editTextBCRight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/color_selector" />
             </LinearLayout>
 
             <LinearLayout
@@ -220,16 +223,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-
                     android:gravity="center_horizontal"
-                    android:text="@string/lbl_dia" />
+                    android:text="@string/lbl_dia"
+                    android:textColor="@color/color_selector" />
 
                 <EditText
                     android:id="@+id/editTextDiaRight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/color_selector" />
             </LinearLayout>
         </LinearLayout>
 
@@ -239,8 +243,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-
-            android:text="@string/lbl_buy_site" />
+            android:text="@string/lbl_buy_site"
+            android:textColor="@color/color_selector" />
 
         <EditText
             android:id="@+id/EditTextBuySiteRight"
@@ -248,7 +252,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:inputType="textUri" />
+            android:inputType="textUri"
+            android:textColor="@color/color_selector" />
     </LinearLayout>
 
 </ScrollView>

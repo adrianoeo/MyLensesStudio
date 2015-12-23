@@ -136,7 +136,6 @@
                     android:layout_marginTop="15dp"
                     android:clickable="true"
                     android:gravity="center"
-                    android:onClick="showMsgUnits"
                     android:text="10"
                     android:textSize="30sp" />
 
@@ -149,7 +148,6 @@
                     android:layout_marginTop="15dp"
                     android:clickable="true"
                     android:gravity="center"
-                    android:onClick="showMsgUnits"
                     android:text="10"
                     android:textSize="30sp" />
 
@@ -202,6 +200,7 @@
                     android:gravity="center"
                     android:onClick="openDialogNumber"
                     android:text="10"
+                    android:background="#7cb6fc"
                     android:textSize="30sp" />
 
                 <TextView android:layout_width="40dp" />
@@ -214,6 +213,7 @@
                     android:gravity="center"
                     android:onClick="openDialogNumber"
                     android:text="10"
+                    android:background="#7cb6fc"
                     android:textSize="30sp" />
 
                 <TextView android:layout_marginRight="10dp" />
