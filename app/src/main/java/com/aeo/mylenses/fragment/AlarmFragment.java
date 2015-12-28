@@ -22,7 +22,10 @@ import com.aeo.mylenses.R;
 import com.aeo.mylenses.dao.AlarmDAO;
 import com.aeo.mylenses.dao.TimeLensesDAO;
 import com.aeo.mylenses.slidetab.SlidingTabLayout;
+import com.aeo.mylenses.util.AnalyticsApplication;
 import com.aeo.mylenses.vo.AlarmVO;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 public class AlarmFragment extends Fragment {
     //    private TimePicker timePicker;
@@ -33,6 +36,7 @@ public class AlarmFragment extends Fragment {
     private Context context;
 
     public static int idAlarm;
+    private Tracker mTracker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,6 +85,10 @@ public class AlarmFragment extends Fragment {
         setNumberPicker();
         setTimeAlarm();
 
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
         return view;
     }
 
@@ -94,6 +102,9 @@ public class AlarmFragment extends Fragment {
     public void onResume() {
         super.onResume();
         save();
+
+        mTracker.setScreenName("AlarmFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void setTimeAlarm() {

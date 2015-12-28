@@ -21,8 +21,11 @@ import com.aeo.mylenses.R;
 import com.aeo.mylenses.adapter.ListReplaceLensBaseAdapter;
 import com.aeo.mylenses.dao.TimeLensesDAO;
 import com.aeo.mylenses.slidetab.SlidingTabLayout;
+import com.aeo.mylenses.util.AnalyticsApplication;
 import com.aeo.mylenses.util.Utility;
 import com.aeo.mylenses.vo.TimeLensesVO;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.List;
 
@@ -31,6 +34,7 @@ public class ListReplaceLensFragment extends ListFragment {
     public static List<TimeLensesVO> listLenses;
     ListReplaceLensBaseAdapter mListAdapter;
     public static final String TAG_LENS = "TAG_LENS";
+    private Tracker mTracker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +65,10 @@ public class ListReplaceLensFragment extends ListFragment {
                 getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -142,6 +150,9 @@ public class ListReplaceLensFragment extends ListFragment {
             }
         });
         fab.hide();
+
+        mTracker.setScreenName("ListReplaceLensFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

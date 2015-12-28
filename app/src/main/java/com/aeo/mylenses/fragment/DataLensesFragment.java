@@ -22,7 +22,10 @@ import com.aeo.mylenses.R;
 import com.aeo.mylenses.adapter.DataLensesCollectionPagerAdapter;
 import com.aeo.mylenses.dao.LensesDataDAO;
 import com.aeo.mylenses.slidetab.SlidingTabLayout;
+import com.aeo.mylenses.util.AnalyticsApplication;
 import com.aeo.mylenses.vo.DataLensesVO;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,6 +72,7 @@ public class DataLensesFragment extends Fragment {
     private ShareActionProvider mShareActionProvider;
 
     private static boolean isSaveVisible;
+    private Tracker mTracker;
 
     public DataLensesFragment() {
     }
@@ -111,6 +115,11 @@ public class DataLensesFragment extends Fragment {
         fab.hide();
 
         isSaveVisible = false;
+
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
         return view;
     }
 
@@ -128,9 +137,7 @@ public class DataLensesFragment extends Fragment {
         menuItemSave = menu.findItem(R.id.menuSaveDataLenses);
         menuItemCancel = menu.findItem(R.id.menuCancelDataLenses);
         menuItemShare = menu.findItem(R.id.menuShareDataLenses);
-//        mShareActionProvider = (ShareActionProvider) menuItemShare.getActionProvider();
         mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItemShare);
-//        mShareActionProvider.setOnShareTargetSelectedListener(this);
         mShareActionProvider.setShareIntent(getDefaultIntent());
     }
 
@@ -202,33 +209,11 @@ public class DataLensesFragment extends Fragment {
                 isSaveVisible = false;
                 return true;
             case android.R.id.home:
-//                NavUtils.navigateUpFromSameTask(getActivity());
                 isSaveVisible = false;
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                return true;
-//            case R.id.menuSaveLenses:
-//                saveDataLenses();
-//                return true;
-//            case R.id.menuEditLenses:
-//                enableControls(true);
-//                item.setVisible(false);
-//                enableMenuEdit(false);
-//                enableMenuSaveCancel(true);
-//                isSaveVisible = true;
-//                return true;
-//            case R.id.menuCancelLenses:
-//                return true;
-//            case R.id.menuDeleteLenses:
-//                deleteLens(idLenses);
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
     }
 
     private void enableControls(boolean enabled, ViewGroup view) {
@@ -298,6 +283,12 @@ public class DataLensesFragment extends Fragment {
         intent.putExtra(Intent.EXTRA_SUBJECT,
                 getString(R.string.str_email_subject_data_lenses));
         intent.putExtra(Intent.EXTRA_TEXT, getDataLenses());
+
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("Share")
+                .build());
+
         return intent;
     }
 
@@ -569,6 +560,14 @@ public class DataLensesFragment extends Fragment {
                 lensesDataDAO.update(vo);
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mTracker.setScreenName("DataLensesFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

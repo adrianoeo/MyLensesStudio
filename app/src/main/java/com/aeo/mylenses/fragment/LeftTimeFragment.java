@@ -184,8 +184,11 @@ public class LeftTimeFragment extends DialogFragment {
 
             //Seta qtd
             TimeLensesVO lastLenses = dao.getLastLens();
-            int qtd = lastLenses.getQtdLeft() - 1;
-            qtdLeft.setValue(qtd >= 0 ? qtd : 0);
+
+            if (lastLenses != null) {
+                int qtd = lastLenses.getQtdLeft() - 1;
+                qtdLeft.setValue(qtd >= 0 ? qtd : 0);
+            }
         }
     }
 

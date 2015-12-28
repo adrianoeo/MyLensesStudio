@@ -169,8 +169,10 @@ public class RightTimeFragment extends DialogFragment {
 
             //Seta qtd
             TimeLensesVO lastLenses = dao.getLastLens();
-            int qtd = lastLenses.getQtdRight() - 1;
-            qtdRight.setValue(qtd >= 0 ? qtd : 0);
+            if (lastLenses != null) {
+                int qtd = lastLenses.getQtdRight() - 1;
+                qtdRight.setValue(qtd >= 0 ? qtd : 0);
+            }
         }
     }
 

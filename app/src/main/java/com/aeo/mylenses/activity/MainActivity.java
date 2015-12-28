@@ -20,8 +20,10 @@ import android.widget.Toast;
 import com.aeo.mylenses.R;
 import com.aeo.mylenses.dao.LensesDataDAO;
 import com.aeo.mylenses.fragment.StatusFragment;
+import com.aeo.mylenses.util.AnalyticsApplication;
 import com.aeo.mylenses.util.Utility;
 import com.aeo.mylenses.vo.DataLensesVO;
+import com.google.android.gms.analytics.Tracker;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     private boolean doubleBackToExitPressedOnce;
 
     BackupManager mBackupManager;
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
 
         if (savedInstanceState == null) {
             Utility.replaceFragment(new StatusFragment(),

@@ -23,7 +23,10 @@ import com.aeo.mylenses.adapter.TimeLensesCollectionPagerAdapter;
 import com.aeo.mylenses.dao.AlarmDAO;
 import com.aeo.mylenses.dao.TimeLensesDAO;
 import com.aeo.mylenses.slidetab.SlidingTabLayout;
+import com.aeo.mylenses.util.AnalyticsApplication;
 import com.aeo.mylenses.vo.TimeLensesVO;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +66,7 @@ public class TimeLensesFragment extends Fragment {
     public static final String KEY_ID_LENS = "KEY_ID_LENS";
 
     private static boolean isSaveVisible;
+    private Tracker mTracker;
 
     public TimeLensesFragment() {
     }
@@ -93,6 +97,9 @@ public class TimeLensesFragment extends Fragment {
     public void onResume() {
         super.onResume();
         idLenses = getArguments() != null ? getArguments().getInt(KEY_ID_LENS) : 0;
+
+        mTracker.setScreenName("TimeLensesFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
@@ -129,6 +136,10 @@ public class TimeLensesFragment extends Fragment {
                 returnToPreviousFragment();
             }
         });
+
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 
         return view;
     }

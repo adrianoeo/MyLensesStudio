@@ -46,8 +46,9 @@ public class ServiceWearLens extends Service implements Runnable {
 				this);
 		builder.setAutoCancel(true);
 		builder.setContentTitle(getString(R.string.app_name));
-		builder.setContentText(getString(R.string.msg_select_which_lens));
-		builder.setSubText(getString(R.string.msg_are_you_wearing_today));
+//		builder.setContentText(getString(R.string.msg_select_which_lens));
+//		builder.setSubText(getString(R.string.msg_are_you_wearing_today));
+		builder.setContentText(getString(R.string.msg_are_you_wearing_today));
 		builder.setSmallIcon(R.drawable.ic_visibility_white_36dp);
 		Bitmap icon = BitmapFactory.decodeResource(getBaseContext().getResources(),
 				R.drawable.ic_launcher);
