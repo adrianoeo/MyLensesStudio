@@ -387,7 +387,7 @@ public class TimeLensesDAO {
     @SuppressLint("SimpleDateFormat")
     public void save(TimeLensesVO timeLensesVO) {
         TimeLensesDAO timeLensesDAO = TimeLensesDAO.getInstance(context);
-//		AlarmDAO alarmDAO = AlarmDAO.getInstance(context);
+		AlarmDAO alarmDAO = AlarmDAO.getInstance(context);
 //		LensesDataDAO lensesDataDAO = LensesDataDAO.getInstance(context);
 //
 //		// When units == 0, set currency date to lenses data
@@ -408,12 +408,12 @@ public class TimeLensesDAO {
             if (!timeLensesVO.equals(timeLensesDAO.getById(idLens))) {
                 if (timeLensesDAO.update(timeLensesVO)) {
 //					HistoryDAO.getInstance(context).insert();
-//					alarmDAO.setAlarm(idLens);
+					alarmDAO.setAlarm(idLens);
                 }
             }
         } else {
             if (timeLensesDAO.insert(timeLensesVO)) {
-//				alarmDAO.setAlarm(idLens);
+				alarmDAO.setAlarm(idLens);
 //				HistoryDAO.getInstance(context).insert();
             }
         }
