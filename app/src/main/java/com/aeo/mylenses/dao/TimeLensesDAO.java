@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.aeo.mylenses.R;
 import com.aeo.mylenses.activity.MainActivity;
 import com.aeo.mylenses.db.DB;
 import com.aeo.mylenses.fragment.ListReplaceLensFragment;
@@ -17,8 +18,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class TimeLensesDAO {
 
@@ -63,9 +64,9 @@ public class TimeLensesDAO {
         synchronized (MainActivity.sDataLock) {
             ContentValues content = new ContentValues();
             content.put("date_left",
-                    Utility.formatDateToSqlite(lensVO.getDateLeft()));
+                    Utility.formatDateToSqlite(lensVO.getDateLeft(), context));
             content.put("date_right",
-                    Utility.formatDateToSqlite(lensVO.getDateRight()));
+                    Utility.formatDateToSqlite(lensVO.getDateRight(), context));
             content.put("expiration_left", lensVO.getExpirationLeft());
             content.put("expiration_right", lensVO.getExpirationRight());
             content.put("type_left", lensVO.getTypeLeft());
@@ -125,9 +126,9 @@ public class TimeLensesDAO {
     private ContentValues getContentValues(TimeLensesVO lensVO) {
         ContentValues content = new ContentValues();
         content.put("date_left",
-                Utility.formatDateToSqlite(lensVO.getDateLeft()));
+                Utility.formatDateToSqlite(lensVO.getDateLeft(), context));
         content.put("date_right",
-                Utility.formatDateToSqlite(lensVO.getDateRight()));
+                Utility.formatDateToSqlite(lensVO.getDateRight(), context));
         content.put("expiration_left", lensVO.getExpirationLeft());
         content.put("expiration_right", lensVO.getExpirationRight());
         content.put("type_left", lensVO.getTypeLeft());
@@ -171,9 +172,9 @@ public class TimeLensesDAO {
         TimeLensesVO vo = new TimeLensesVO();
         vo.setId(cursor.getInt(cursor.getColumnIndex("id")));
         vo.setDateLeft(Utility.formatDateDefault(cursor.getString(cursor
-                .getColumnIndex("date_left"))));
+                .getColumnIndex("date_left")), context));
         vo.setDateRight(Utility.formatDateDefault(cursor.getString(cursor
-                .getColumnIndex("date_right"))));
+                .getColumnIndex("date_right")), context));
         vo.setExpirationLeft(cursor.getInt(cursor
                 .getColumnIndex("expiration_left")));
         vo.setExpirationRight(cursor.getInt(cursor
@@ -229,42 +230,68 @@ public class TimeLensesDAO {
         dateExpLeft.setTime(calendars[0].getTime());
         dateExpRight.setTime(calendars[1].getTime());
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+//        String format = context.getResources().getString(R.string.locale);
+//        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+//
+//        Date dateReplaceLeft = null;
+//        Date dateReplaceRight = null;
+//        Date dateToday = null;
+//
+//        try {
+//            dateReplaceLeft = dateFormat.parse(new StringBuilder()
+//                    .append(dateExpLeft.get(Calendar.DAY_OF_MONTH))
+//                    .append("/")
+//                    .append(String.format("%02d",
+//                            (dateExpLeft.get(Calendar.MONTH) + 1))).append("/")
+//                    .append(dateExpLeft.get(Calendar.YEAR)).toString());
+//
+//            dateReplaceRight = dateFormat.parse(new StringBuilder()
+//                    .append(dateExpRight.get(Calendar.DAY_OF_MONTH))
+//                    .append("/")
+//                    .append(String.format("%02d",
+//                            (dateExpRight.get(Calendar.MONTH) + 1)))
+//                    .append("/").append(dateExpRight.get(Calendar.YEAR))
+//                    .toString());
+//
+//            dateToday = dateFormat.parse(dateFormat.format(new Date()));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
-        Date dateReplaceLeft = null;
-        Date dateReplaceRight = null;
-        Date dateToday = null;
+//        long dayLeft = dateReplaceLeft.getTime();
+//        long dayRight = dateReplaceRight.getTime();
+//        long dayToday = dateToday.getTime();
 
-        try {
-            dateReplaceLeft = dateFormat.parse(new StringBuilder()
-                    .append(dateExpLeft.get(Calendar.DAY_OF_MONTH))
-                    .append("/")
-                    .append(String.format("%02d",
-                            (dateExpLeft.get(Calendar.MONTH) + 1))).append("/")
-                    .append(dateExpLeft.get(Calendar.YEAR)).toString());
+//        long dayLeft = dateExpLeft.getTimeInMillis();
+//        long dayRight = dateExpRight.getTimeInMillis();
+//        long dayToday = Calendar.getInstance().getTimeInMillis();
+//
+//        long index = (24 * 60 * 60 * 1000);
+//
+//        daysExpLeft = (dayLeft - dayToday) / index;
+//        daysExpRight = (dayRight - dayToday) / index;
 
-            dateReplaceRight = dateFormat.parse(new StringBuilder()
-                    .append(dateExpRight.get(Calendar.DAY_OF_MONTH))
-                    .append("/")
-                    .append(String.format("%02d",
-                            (dateExpRight.get(Calendar.MONTH) + 1)))
-                    .append("/").append(dateExpRight.get(Calendar.YEAR))
-                    .toString());
 
-            dateToday = dateFormat.parse(dateFormat.format(new Date()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        Date dateReplaceLeft = dateExpLeft.getTime();
+//        Date dateReplaceRight = dateExpRight.getTime();
+//        Date dateToday = new Date();
 
-        long dayLeft = dateReplaceLeft.getTime();
-        long dayRight = dateReplaceRight.getTime();
-        long dayToday = dateToday.getTime();
-        long index = (24 * 60 * 60 * 1000);
+        Calendar calendarToday = Calendar.getInstance();
+        calendarToday.set(Calendar.DAY_OF_MONTH, calendarToday.get(Calendar.DAY_OF_MONTH));
+        calendarToday.set(Calendar.MONTH, calendarToday.get(Calendar.MONTH));
+        calendarToday.set(Calendar.YEAR, calendarToday.get(Calendar.YEAR));
+        calendarToday.set(Calendar.HOUR_OF_DAY, 0);
+        calendarToday.set(Calendar.MINUTE, 0);
+        calendarToday.set(Calendar.SECOND, 0);
+        calendarToday.set(Calendar.MILLISECOND, 0);
 
-        daysExpLeft = (dayLeft - dayToday) / index;
-        daysExpRight = (dayRight - dayToday) / index;
+        daysExpLeft = dateExpLeft.getTimeInMillis() - calendarToday.getTimeInMillis();
+        daysExpRight = dateExpRight.getTimeInMillis() - calendarToday.getTimeInMillis();
 
-        return new Long[]{daysExpLeft, daysExpRight};
+//        String dt = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(dateExpLeft.getTime());
+
+        return new Long[]{TimeUnit.DAYS.convert(daysExpLeft, TimeUnit.MILLISECONDS), TimeUnit.DAYS.convert(daysExpRight, TimeUnit.MILLISECONDS)};
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -272,7 +299,9 @@ public class TimeLensesDAO {
         Calendar dateExpLeft = Calendar.getInstance();
         Calendar dateExpRight = Calendar.getInstance();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String format = context.getResources().getString(R.string.locale);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         int totalDaysLeft = 0;
         int totalDaysRight = 0;
@@ -316,6 +345,8 @@ public class TimeLensesDAO {
             }
         }
 
+//        String dt = new SimpleDateFormat(format).format(dateExpLeft.getTime());
+
         return new Calendar[]{dateExpLeft, dateExpRight};
     }
 
@@ -331,89 +362,23 @@ public class TimeLensesDAO {
         return new int[]{unitsLeft, unitsRight};
     }
 
-
-    public int getSaldoLensLeft() {
-        int totalUnitsLeft = 0;
-//		DataLensesVO lensesVO = LensesDataDAO.getInstance(context).getLastLenses();
-//
-//		if (lensesVO != null) {
-//			totalUnitsLeft = Integer.valueOf(context.getResources()
-//					.getStringArray(R.array.array_num_units)[LensesDataDAO
-//					.getInstance(context).getLastLenses()
-//					.getNumber_units_left()]);
-//
-//			StringBuilder sql = new StringBuilder();
-//			sql.append("select count(id) ").append("from ").append(tableName)
-//					.append(" where Datetime(date_left) >= Datetime('")
-//					.append(HistoryDAO.getInstance(context).getDateIniLeft())
-//					.append("')")
-//					.append(" and in_use_left = 1 and count_unit_left = 1");
-//			Cursor rs = db.rawQuery(sql.toString(), null);
-//
-//			if (rs.moveToFirst()) {
-//				return totalUnitsLeft - rs.getInt(0);
-//			}
-//		}
-
-        return totalUnitsLeft;
-    }
-
-    public int getSaldoLensRight() {
-        int totalUnitsRight = 0;
-//		DataLensesVO lensesVO = LensesDataDAO.getInstance(context).getLastLenses();
-//
-//		if (lensesVO != null) {
-//			totalUnitsRight = Integer.valueOf(context.getResources()
-//					.getStringArray(R.array.array_num_units)[LensesDataDAO
-//					.getInstance(context).getLastLenses()
-//					.getNumber_units_right()]);
-//
-//			StringBuilder sql = new StringBuilder();
-//			sql.append("select count(id) ").append("from ").append(tableName)
-//					.append(" where Datetime(date_left) >= Datetime('")
-//					.append(HistoryDAO.getInstance(context).getDateIniRight())
-//					.append("')")
-//					.append(" and in_use_right = 1 and count_unit_right = 1");
-//			Cursor rs = db.rawQuery(sql.toString(), null);
-//
-//			if (rs.moveToFirst()) {
-//				return totalUnitsRight - rs.getInt(0);
-//			}
-//		}
-
-        return totalUnitsRight;
-    }
-
     @SuppressLint("SimpleDateFormat")
     public void save(TimeLensesVO timeLensesVO) {
         TimeLensesDAO timeLensesDAO = TimeLensesDAO.getInstance(context);
-		AlarmDAO alarmDAO = AlarmDAO.getInstance(context);
-//		LensesDataDAO lensesDataDAO = LensesDataDAO.getInstance(context);
-//
-//		// When units == 0, set currency date to lenses data
-//		if (timeLensesDAO.getSaldoLensLeft() == 0) {
-//			lensesDataDAO.updateDate("date_ini_left", lensesDataDAO
-//					.getLastIdLens(), new SimpleDateFormat("yyyy-MM-dd")
-//					.format(new Date()));
-//		}
-//		if (timeLensesDAO.getSaldoLensRight() == 0) {
-//			lensesDataDAO.updateDate("date_ini_right", lensesDataDAO
-//					.getLastIdLens(), new SimpleDateFormat("yyyy-MM-dd")
-//					.format(new Date()));
-//		}
-//
+        AlarmDAO alarmDAO = AlarmDAO.getInstance(context);
+
         int idLens = timeLensesVO.getId() == null ? 0 : timeLensesVO.getId();
         if (idLens != 0) {
             // timeLensesVO.setId(idLens);
             if (!timeLensesVO.equals(timeLensesDAO.getById(idLens))) {
                 if (timeLensesDAO.update(timeLensesVO)) {
 //					HistoryDAO.getInstance(context).insert();
-					alarmDAO.setAlarm(idLens);
+                    alarmDAO.setAlarm(idLens);
                 }
             }
         } else {
             if (timeLensesDAO.insert(timeLensesVO)) {
-				alarmDAO.setAlarm(idLens);
+                alarmDAO.setAlarm(idLens);
 //				HistoryDAO.getInstance(context).insert();
             }
         }

@@ -18,7 +18,6 @@ import com.aeo.mylenses.service.BootBroadcastReceiver;
 import com.aeo.mylenses.service.DailyAlarmBroadcastReceiver;
 import com.aeo.mylenses.vo.AlarmVO;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class AlarmDAO {
@@ -135,6 +134,8 @@ public class AlarmDAO {
 		calendarLeft.add(Calendar.DATE, daysBefore);
 		calendarRight.add(Calendar.DATE, daysBefore);
 
+//		String  s = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(calendarLeft.getTime());
+
 		// Se as datas das lentes esquerda e direita forem iguais seta apenas um
 		// alarme, senao seta um para cada lente.
 		if (calendarLeft.get(Calendar.DAY_OF_MONTH) == calendarRight
@@ -180,9 +181,9 @@ public class AlarmDAO {
 		calendar.set(Calendar.HOUR_OF_DAY, hour);
 		calendar.set(Calendar.MINUTE, minute);
 		calendar.set(Calendar.SECOND, 0);
-//		calendar.add(Calendar.DATE, 1);
+		calendar.add(Calendar.DATE, 1);
 
-		String date = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(calendar.getTime());
+//		String date = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(calendar.getTime());
 
 		Intent intent = new Intent(context, DailyAlarmBroadcastReceiver.class);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context,

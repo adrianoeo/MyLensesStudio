@@ -71,7 +71,7 @@ public class LensesDataDAO {
 		content.put("add_left", vo.getAdd_left());
 		content.put("buy_site_left", vo.getBuy_site_left().trim());
 		content.put("date_ini_left",
-				Utility.formatDateToSqlite(vo.getDate_ini_left()));
+				Utility.formatDateToSqlite(vo.getDate_ini_left(), context));
 		content.put("number_units_left", vo.getNumber_units_left());
 		content.put("description_right", vo.getDescription_right().trim());
 		content.put("brand_right", vo.getBrand_right().trim());
@@ -83,7 +83,7 @@ public class LensesDataDAO {
 		content.put("add_right", vo.getAdd_right());
 		content.put("buy_site_right", vo.getBuy_site_right().trim());
 		content.put("date_ini_right",
-				Utility.formatDateToSqlite(vo.getDate_ini_right()));
+				Utility.formatDateToSqlite(vo.getDate_ini_right(), context));
 		content.put("number_units_right", vo.getNumber_units_right());
 		content.put("bc_left", vo.getBc_left());
 		content.put("bc_right", vo.getBc_right());
@@ -129,7 +129,7 @@ public class LensesDataDAO {
 		vo.setAdd_left(c.getString(c.getColumnIndex("add_left")));
 		vo.setBuy_site_left(c.getString(c.getColumnIndex("buy_site_left")));
 		vo.setDate_ini_left(Utility.formatDateDefault(c.getString(c
-				.getColumnIndex("date_ini_left"))));
+				.getColumnIndex("date_ini_left")), context));
 		vo.setNumber_units_left(c.getInt(c.getColumnIndex("number_units_left")));
 		vo.setDescription_right(c.getString(c
 				.getColumnIndex("description_right")));
@@ -143,7 +143,7 @@ public class LensesDataDAO {
 		vo.setAdd_right(c.getString(c.getColumnIndex("add_right")));
 		vo.setBuy_site_right(c.getString(c.getColumnIndex("buy_site_right")));
 		vo.setDate_ini_right(Utility.formatDateDefault(c.getString(c
-				.getColumnIndex("date_ini_right"))));
+				.getColumnIndex("date_ini_right")), context));
 		vo.setNumber_units_right(c.getInt(c
 				.getColumnIndex("number_units_right")));
 		vo.setBc_left(c.getDouble(c.getColumnIndex("bc_left")));

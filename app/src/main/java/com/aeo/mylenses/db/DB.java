@@ -46,8 +46,10 @@ public class DB extends SQLiteOpenHelper {
 			"num_days_not_used_left", "num_days_not_used_right", "in_use_left",
 			"in_use_right" };
 
+	private Context context;
 	public DB(Context context) {
 		super(context, DB_NAME, null, VERSION_4);
+		this.context = context;
 	}
 
 	@SuppressLint("SimpleDateFormat")
@@ -121,9 +123,9 @@ public class DB extends SQLiteOpenHelper {
 		if (c.moveToFirst()) {
 			idLens = c.getString(c.getColumnIndex("id"));
 			dateLeft = Utility.formatDateToSqlite(c.getString(c
-					.getColumnIndex("date_left")));
+					.getColumnIndex("date_left")), context);
 			dateRight = Utility.formatDateToSqlite(c.getString(c
-					.getColumnIndex("date_right")));
+					.getColumnIndex("date_right")), context);
 
 			// Insert lenses data with last dates and 6 units
 			ContentValues content = new ContentValues();

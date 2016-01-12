@@ -1,6 +1,7 @@
 package com.aeo.mylenses.util;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,13 +19,18 @@ import java.text.SimpleDateFormat;
 public abstract class Utility {
 
     @SuppressLint("SimpleDateFormat")
-    public static String formatDateDefault(String dateToFormat) {
+    public static String formatDateDefault(String dateToFormat, Context context) {
         String date = null;
         try {
             if (dateToFormat != null) {
-                date = new SimpleDateFormat("dd/MM/yyyy")
+                String dateFormat = context.getResources().getString(R.string.locale);
+
+                date = new SimpleDateFormat(dateFormat)
                         .format(new SimpleDateFormat("yyyy-MM-dd")
                                 .parse(dateToFormat));
+//                date = new SimpleDateFormat("dd/MM/yyyy")
+//                        .format(new SimpleDateFormat("yyyy-MM-dd")
+//                                .parse(dateToFormat));
             }
         } catch (ParseException e) {
         }
@@ -32,13 +38,17 @@ public abstract class Utility {
     }
 
     @SuppressLint("SimpleDateFormat")
-    public static String formatDateToSqlite(String dateToFormat) {
+    public static String formatDateToSqlite(String dateToFormat, Context context) {
         String date = null;
         try {
             if (dateToFormat != null) {
+                String dateFormat = context.getResources().getString(R.string.locale);
                 date = new SimpleDateFormat("yyyy-MM-dd")
-                        .format(new SimpleDateFormat("dd/MM/yyyy")
+                        .format(new SimpleDateFormat(dateFormat)
                                 .parse(dateToFormat));
+//                date = new SimpleDateFormat("yyyy-MM-dd")
+//                        .format(new SimpleDateFormat("dd/MM/yyyy")
+//                                .parse(dateToFormat));
             }
         } catch (ParseException e) {
         }

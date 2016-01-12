@@ -28,7 +28,6 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 public class AlarmFragment extends Fragment {
-    //    private TimePicker timePicker;
     private NumberPicker numberDaysBefore;
     private CheckBox cbRemindEveryDay;
     private static Button btnTimePickerAlarm;
@@ -45,9 +44,6 @@ public class AlarmFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
         idAlarm = view.getId();
-
-//        timePicker = (TimePicker) view.findViewById(R.id.timePickerAlarm);
-//        timePicker.setIs24HourView(true);
 
         btnTimePickerAlarm = (Button) view.findViewById(R.id.btnTimePickerAlarm);
 
@@ -111,14 +107,10 @@ public class AlarmFragment extends Fragment {
         AlarmDAO dao = AlarmDAO.getInstance(getContext());
         AlarmVO vo = dao.getAlarm();
         if (vo == null) {
-//            timePicker.setCurrentHour(0);
-//            timePicker.setCurrentMinute(0);
             btnTimePickerAlarm.setText("12:00");
             numberDaysBefore.setValue(0);
             cbRemindEveryDay.setChecked(true);
         } else {
-//            timePicker.setCurrentHour(vo.getHour());
-//            timePicker.setCurrentMinute(vo.getMinute());
             btnTimePickerAlarm.setText(String.format("%02d:%02d", vo.getHour(), vo.getMinute()));
             numberDaysBefore.setValue(vo.getDaysBefore());
             cbRemindEveryDay.setChecked(vo.getRemindEveryDay() == 1 ? true : false);
@@ -133,8 +125,6 @@ public class AlarmFragment extends Fragment {
 
     private void save() {
         AlarmVO vo = new AlarmVO();
-//        vo.setHour(timePicker.getCurrentHour());
-//        vo.setMinute(timePicker.getCurrentMinute());
 
         String[] time = btnTimePickerAlarm.getText().toString().split(":");
 

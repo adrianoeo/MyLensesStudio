@@ -25,6 +25,7 @@ import com.aeo.mylenses.vo.TimeLensesVO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 //import com.aeo.mylenses.dao.AlarmDAO;
 
@@ -97,7 +98,8 @@ public class LeftTimeFragment extends DialogFragment {
             public void onClick(View v) {
                 Calendar date = Calendar.getInstance();
                 try {
-                    date.setTime(new SimpleDateFormat("dd/MM/yyyy")
+                    String dateFormat = context.getResources().getString(R.string.locale);
+                    date.setTime(new SimpleDateFormat(dateFormat)
                             .parse(btnDateLeft.getText().toString()));
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -157,14 +159,18 @@ public class LeftTimeFragment extends DialogFragment {
     }
 
     private void setDate() {
-        final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
+//        final Calendar c = Calendar.getInstance();
+//        int year = c.get(Calendar.YEAR);
+//        int month = c.get(Calendar.MONTH);
+//        int day = c.get(Calendar.DAY_OF_MONTH);
 
-        String strDate = new StringBuilder(String.format("%02d", day))
-                .append("/").append(String.format("%02d", month + 1))
-                .append("/").append(String.valueOf(year)).toString();
+//        String strDate = new StringBuilder(String.format("%02d", day))
+//                .append("/").append(String.format("%02d", month + 1))
+//                .append("/").append(String.valueOf(year)).toString();
+
+        String dateFormat = context.getResources().getString(R.string.locale);
+
+        String strDate = new SimpleDateFormat(dateFormat).format(new Date());
 
         btnDateLeft.setText(strDate);
     }
@@ -200,13 +206,13 @@ public class LeftTimeFragment extends DialogFragment {
         qtdLeft.setEnabled(enabled);
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (!isVisibleToUser && btnDateLeft != null && btnDateLeft.isEnabled()) {
-//            saveLens();
-//			getActivity().finish();
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (!isVisibleToUser && btnDateLeft != null && btnDateLeft.isEnabled()) {
+////            saveLens();
+////			getActivity().finish();
+//        }
+//    }
 
 }
