@@ -33,7 +33,7 @@ public class TimeLensesCollectionPagerAdapter extends FragmentStatePagerAdapter 
 	public Fragment getItem(int position) {
 		Fragment fragment = null;
 		if (position == 0) {
-			fragment = LeftTimeFragment.newInstance(idLenses);
+			fragment = LeftTimeFragment.newInstance(idLenses, this);
 			mPageReferenceMap.put(position, fragment);
 		} else {
 			fragment = RightTimeFragment.newInstance(idLenses);
