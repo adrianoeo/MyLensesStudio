@@ -297,6 +297,12 @@ public class TimeLensesFragment extends Fragment {
     private TimeLensesVO setTimeLensesVO() {
         TimeLensesVO timeLensesVO = new TimeLensesVO();
 
+        // Quando número é digitado manualmente através do teclado, é necessário dar clearFocus()
+        // para atualizar a view com o número digitado, caso contrário, o valor qdo obtido
+        // por getValue() retornará o número anterior.
+        numberPickerLeft.clearFocus();
+        numberPickerRight.clearFocus();
+
         timeLensesVO.setDateLeft(btnDateLeft.getText().toString());
         timeLensesVO.setDateRight(btnDateRight.getText().toString());
         timeLensesVO.setExpirationLeft(numberPickerLeft.getValue());

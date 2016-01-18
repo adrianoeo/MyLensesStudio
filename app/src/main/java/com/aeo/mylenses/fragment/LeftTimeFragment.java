@@ -241,6 +241,7 @@ public class LeftTimeFragment extends DialogFragment {
                 qtdRight = (NumberPicker) rightView.findViewById(R.id.qtdRight);
 
                 btnDateRight.setText(btnDateLeft.getText().toString());
+                numberPickerLeft.clearFocus();
                 numberPickerRight.setValue(numberPickerLeft.getValue());
                 spinnerRight.setSelection(spinnerLeft.getSelectedItemPosition());
                 cbInUseRight.setChecked(cbInUseLeft.isChecked());
