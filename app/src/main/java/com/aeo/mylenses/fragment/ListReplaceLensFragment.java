@@ -2,18 +2,18 @@ package com.aeo.mylenses.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,8 +33,8 @@ public class ListReplaceLensFragment extends ListFragment {
 
     public static List<TimeLensesVO> listLenses;
     ListReplaceLensBaseAdapter mListAdapter;
-    public static final String TAG_LENS = "TAG_LENS";
     private Tracker mTracker;
+    private FloatingActionButton fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,8 +55,14 @@ public class ListReplaceLensFragment extends ListFragment {
         SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) viewMain.findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(null);
 
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.hide();
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setImageResource(R.drawable.ic_action_new);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utility.replaceFragmentWithBackStack(new TimeLensesFragment(), getFragmentManager());
+            }
+        });
 
         Toolbar toolbar = (Toolbar) viewMain.findViewById(R.id.toolbar);
 
@@ -86,38 +92,9 @@ public class ListReplaceLensFragment extends ListFragment {
         TextView idLens = (TextView) v.findViewById(R.id.textViewIdReplaceLens);
 
         if (idLens != null) {
-//            startActivity(Integer.valueOf(idLens.getText().toString()));
             TimeLensesFragment fragment
                     = TimeLensesFragment.newInstance(Integer.parseInt(idLens.getText().toString()));
             Utility.replaceFragmentWithBackStack(fragment, getFragmentManager());
-        }
-    }
-
-//    private void startActivity(int idLens) {
-//        Intent intent = new Intent(getContext(), TimeLensActivityDEL.class);
-//        intent.putExtra("ID_LENS", idLens);
-//        startActivity(intent);
-//    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        MenuItem menuItemInsert = menu.findItem(R.id.menuInsertLens);
-        menuItemInsert.setVisible(true);
-
-//        MenuItem menuItemHelp = menu.findItem(R.id.menuHelp);
-//        menuItemHelp.setVisible(false);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menuInsertLens:
-                Utility.replaceFragmentWithBackStack(new TimeLensesFragment(), getFragmentManager());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -141,15 +118,15 @@ public class ListReplaceLensFragment extends ListFragment {
             setListAdapter(adapter);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setImageResource(R.drawable.ic_action_new);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utility.replaceFragmentWithBackStack(new TimeLensesFragment(), getFragmentManager());
-            }
-        });
-        fab.hide();
+        CoordinatorLayout.LayoutParams params
+                = new CoordinatorLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.BOTTOM | Gravity.END;
+        int margin = (int) getResources().getDimension(R.dimen.fab_margin);
+        params.setMargins(margin, margin, margin, margin);
+        fab.setLayoutParams(params);
+
+        fab.show();
 
         mTracker.setScreenName("ListReplaceLensFragment");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());

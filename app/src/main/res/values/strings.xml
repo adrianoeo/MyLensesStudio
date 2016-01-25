@@ -15,6 +15,7 @@
     <string name="nav_dados">Lenses data</string>
     <string name="nav_notificacao">Notification</string>
     <string name="nav_compra">Buy your lenses</string>
+    <string name="nav_exit">Exit</string>
 
     <string name="title_status">Status</string>
     <string name="title_periodo">Time</string>
@@ -115,5 +116,9 @@
     <string name="title_activity_time_lens">Time</string>
     <string name="title_activity_list_time_lens">Time of lenses</string>
     <string name="title_activity_days">Status of lenses</string>
+    <string name="str_days">Day(s)</string>
+    <string name="str_months">Month(s)</string>
+    <string name="str_years">Year(s)</string>
+
 
 </resources>

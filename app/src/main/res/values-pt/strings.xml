@@ -16,6 +16,7 @@
     <string name="nav_dados">Dados das lentes</string>
     <string name="nav_notificacao">Notificação</string>
     <string name="nav_compra">Compre suas lentes</string>
+    <string name="nav_exit">Sair</string>
 
     <string name="title_status">Status</string>
     <string name="title_periodo">Período</string>
@@ -116,5 +117,7 @@
     <string name="title_activity_days">Status das lentes</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-
+    <string name="str_days">Dia(s)</string>
+    <string name="str_months">Mês(es)</string>
+    <string name="str_years">Ano(s)</string>
 </resources>

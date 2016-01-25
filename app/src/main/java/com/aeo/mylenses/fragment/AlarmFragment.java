@@ -9,9 +9,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,7 +18,6 @@ import android.widget.TimePicker;
 
 import com.aeo.mylenses.R;
 import com.aeo.mylenses.dao.AlarmDAO;
-import com.aeo.mylenses.dao.TimeLensesDAO;
 import com.aeo.mylenses.slidetab.SlidingTabLayout;
 import com.aeo.mylenses.util.AnalyticsApplication;
 import com.aeo.mylenses.vo.AlarmVO;
@@ -155,18 +151,10 @@ public class AlarmFragment extends Fragment {
             dao.update(vo);
         }
 
-        int idLenses = TimeLensesDAO.getInstance(context).getLastIdLens();
-        if (idLenses != 0) {
-            dao.setAlarm(idLenses);
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        MenuItem menuItemInsert = menu.findItem(R.id.menuInsertLens);
-        menuItemInsert.setVisible(false);
-
-        super.onCreateOptionsMenu(menu, inflater);
+//        int idLenses = TimeLensesDAO.getInstance(context).getLastIdLens();
+//        if (idLenses != 0) {
+//            dao.setAlarm(idLenses);
+//        }
     }
 
     private int[] getTime() {

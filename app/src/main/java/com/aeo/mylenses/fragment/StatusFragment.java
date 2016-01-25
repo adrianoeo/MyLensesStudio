@@ -4,28 +4,33 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aeo.mylenses.R;
-import com.aeo.mylenses.dao.AlarmDAO;
 import com.aeo.mylenses.dao.TimeLensesDAO;
 import com.aeo.mylenses.slidetab.SlidingTabLayout;
 import com.aeo.mylenses.util.AnalyticsApplication;
+import com.aeo.mylenses.util.Utility;
 import com.aeo.mylenses.vo.TimeLensesVO;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -49,17 +54,17 @@ public class StatusFragment extends Fragment {
     private TextView tvLeftEye;
     private TextView tvRightEye;
     private TextView tvEmpty;
-    private View view1;
-    private View view2;
+    private LinearLayout linearLayoutLeft;
+    private LinearLayout linearLayoutRight;
+    private LinearLayout linearLayoutEmpty;
 
-    private Menu menu;
-
-    protected static final String TAG_DAYS = "TAG_DAYS";
     private Context context;
 
     private Animation animation;
     private Tracker mTracker;
     private AdView mAdView;
+    private Toolbar toolbar;
+    private FloatingActionButton fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,11 +74,15 @@ public class StatusFragment extends Fragment {
 
         context = getActivity();
 
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+
+        linearLayoutLeft = (LinearLayout) view.findViewById(R.id.layoutLeft);
+        linearLayoutRight = (LinearLayout) view.findViewById(R.id.layoutRight);
+        linearLayoutEmpty = (LinearLayout) view.findViewById(R.id.layoutEmpty);
+
         tvLeftEye = (TextView) view.findViewById(R.id.tvLeftEye);
         tvRightEye = (TextView) view.findViewById(R.id.tvRightEye);
         tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
-        view1 = (View) view.findViewById(R.id.view1);
-        view2 = (View) view.findViewById(R.id.view2);
 
         tvDaysRemainingLeftEye = (TextView) view
                 .findViewById(R.id.tvDaysRemainingLeftEye);
@@ -124,8 +133,15 @@ public class StatusFragment extends Fragment {
         SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) viewMain.findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(null);
 
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.hide();
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setImageResource(R.drawable.ic_action_new);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utility.replaceFragmentWithBackStack(new TimeLensesFragment(), getFragmentManager());
+                toolbar.setTitle(R.string.title_periodo);
+            }
+        });
 
         mAdView = (AdView) view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -135,48 +151,20 @@ public class StatusFragment extends Fragment {
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
 
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        linearLayoutLeft.setVisibility(View.INVISIBLE);
+        linearLayoutRight.setVisibility(View.INVISIBLE);
+        linearLayoutEmpty.setVisibility(View.INVISIBLE);
+
         return view;
     }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        this.menu = menu;
-
-        MenuItem menuItemInsert = menu.findItem(R.id.menuInsertLens);
-        menuItemInsert.setVisible(false);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        enableMenuItem(false);
-    }
-
-    private void enableMenuItem(boolean enabled) {
-        MenuItem menuItemInsert = menu.findItem(R.id.menuInsertLens);
-        if (menuItemInsert != null) {
-            menuItemInsert.setVisible(enabled);
-        }
-
-    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        switch (item.getItemId()) {
-//            case R.id.menuHelp:
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                builder.setMessage(R.string.msg_units);
-//                builder.setCancelable(true);
-//                builder.setPositiveButton(R.string.btn_ok, null);
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
 
     @SuppressLint("ResourceAsColor")
     public void setDays(TimeLensesVO timeLensesVO) {
@@ -194,13 +182,13 @@ public class StatusFragment extends Fragment {
 
         if (days[0].compareTo(1L) == 0) {
             tvStrDayLeft.setText(R.string.str_day_remaining);
-            tvStrDayLeft.setTextColor(getResources().getColor(R.color.black));
-            tvDaysRemainingLeftEye.setTextColor(getResources().getColor(
+            tvStrDayLeft.setTextColor(getColor(R.color.black));
+            tvDaysRemainingLeftEye.setTextColor(getColor(
                     R.color.black));
         } else if (days[0].compareTo(0L) == 0) {
             tvStrDayLeft.setText(R.string.str_time_to_replace);
-            tvStrDayLeft.setTextColor(getResources().getColor(R.color.red));
-            tvDaysRemainingLeftEye.setTextColor(getResources().getColor(
+            tvStrDayLeft.setTextColor(getColor(R.color.red));
+            tvDaysRemainingLeftEye.setTextColor(getColor(
                     R.color.red));
             tvDaysRemainingLeftEye.setAnimation(animation);
         } else if (days[0].compareTo(0L) < 0) {
@@ -210,15 +198,15 @@ public class StatusFragment extends Fragment {
             } else {
                 tvStrDayLeft.setText(R.string.str_days_expired);
             }
-            tvStrDayLeft.setTextColor(getResources().getColor(R.color.red));
-            tvDaysRemainingLeftEye.setTextColor(getResources().getColor(
+            tvStrDayLeft.setTextColor(getColor(R.color.red));
+            tvDaysRemainingLeftEye.setTextColor(getColor(
                     R.color.red));
             tvDaysRemainingLeftEye.setAnimation(animation);
 
         } else {
             tvStrDayLeft.setText(R.string.str_days_remaining);
-            tvStrDayLeft.setTextColor(getResources().getColor(R.color.black));
-            tvDaysRemainingLeftEye.setTextColor(getResources().getColor(
+            tvStrDayLeft.setTextColor(getColor(R.color.black));
+            tvDaysRemainingLeftEye.setTextColor(getColor(
                     R.color.black));
         }
 
@@ -240,13 +228,13 @@ public class StatusFragment extends Fragment {
         tvDaysRemainingRightEye.setText(String.valueOf(days[1]));
         if (days[1].compareTo(1L) == 0) {
             tvStrDayRight.setText(R.string.str_day_remaining);
-            tvStrDayRight.setTextColor(getResources().getColor(R.color.black));
-            tvDaysRemainingRightEye.setTextColor(getResources().getColor(
+            tvStrDayRight.setTextColor(getColor(R.color.black));
+            tvDaysRemainingRightEye.setTextColor(getColor(
                     R.color.black));
         } else if (days[1].compareTo(0L) == 0) {
             tvStrDayRight.setText(R.string.str_time_to_replace);
-            tvStrDayRight.setTextColor(getResources().getColor(R.color.red));
-            tvDaysRemainingRightEye.setTextColor(getResources().getColor(
+            tvStrDayRight.setTextColor(getColor(R.color.red));
+            tvDaysRemainingRightEye.setTextColor(getColor(
                     R.color.red));
             tvDaysRemainingRightEye.setAnimation(animation);
         } else if (days[1].compareTo(0L) < 0) {
@@ -256,23 +244,21 @@ public class StatusFragment extends Fragment {
             } else {
                 tvStrDayRight.setText(R.string.str_days_expired);
             }
-            tvStrDayRight.setTextColor(getResources().getColor(R.color.red));
-            tvDaysRemainingRightEye.setTextColor(getResources().getColor(
+            tvStrDayRight.setTextColor(getColor(R.color.red));
+            tvDaysRemainingRightEye.setTextColor(getColor(
                     R.color.red));
             tvDaysRemainingRightEye.setAnimation(animation);
         } else {
             tvStrDayRight.setText(R.string.str_days_remaining);
-            tvStrDayRight.setTextColor(getResources().getColor(R.color.black));
-            tvDaysRemainingRightEye.setTextColor(getResources().getColor(
+            tvStrDayRight.setTextColor(getColor(R.color.black));
+            tvDaysRemainingRightEye.setTextColor(getColor(
                     R.color.black));
         }
 
         boolean isRightVisible = timeLensesVO != null && timeLensesVO.getInUseRight() == 1;
 
-        tvDaysRemainingRightEye.setVisibility(isRightVisible ? View.VISIBLE
-                : View.INVISIBLE);
-        tvStrDayRight.setVisibility(isRightVisible ? View.VISIBLE
-                : View.INVISIBLE);
+        tvDaysRemainingRightEye.setVisibility(isRightVisible ? View.VISIBLE : View.INVISIBLE);
+        tvStrDayRight.setVisibility(isRightVisible ? View.VISIBLE : View.INVISIBLE);
 
         if (!isRightVisible) {
             tvDaysRemainingRightEye.clearAnimation();
@@ -280,12 +266,20 @@ public class StatusFragment extends Fragment {
 
         // Labels
         tvLeftEye.setVisibility(timeLensesVO != null ? View.VISIBLE : View.INVISIBLE);
-        tvRightEye
-                .setVisibility(timeLensesVO != null ? View.VISIBLE : View.INVISIBLE);
-        view1.setVisibility(timeLensesVO != null ? View.VISIBLE : View.INVISIBLE);
-        view2.setVisibility(timeLensesVO != null ? View.VISIBLE : View.INVISIBLE);
-
+        tvRightEye.setVisibility(timeLensesVO != null ? View.VISIBLE : View.INVISIBLE);
         tvEmpty.setVisibility(timeLensesVO == null ? View.VISIBLE : View.GONE);
+
+        linearLayoutLeft.setVisibility(timeLensesVO == null ? View.GONE : View.VISIBLE);
+        linearLayoutRight.setVisibility(timeLensesVO == null ? View.GONE : View.VISIBLE);
+        linearLayoutEmpty.setVisibility(timeLensesVO == null ? View.VISIBLE : View.GONE);
+
+     /*   tvEmpty.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utility.setScreen(R.id.nav_periodo, toolbar, getActivity().getSupportFragmentManager());
+            }
+        });*/
+
 
     }
 
@@ -298,12 +292,10 @@ public class StatusFragment extends Fragment {
 
             tvStrUnitsLeft.setText(String.valueOf(unitsLeft));
             tvStrUnitsRight.setText(String.valueOf(unitsRight));
-            tvStrUnitsLeft.setTextColor(unitsLeft > 1 ? getResources()
-                    .getColor(R.color.black) : getResources().getColor(
-                    R.color.red));
-            tvStrUnitsRight.setTextColor(unitsRight > 1 ? getResources()
-                    .getColor(R.color.black) : getResources().getColor(
-                    R.color.red));
+            tvStrUnitsLeft.setTextColor(
+                    unitsLeft > 1 ? getColor(R.color.black) : getColor(R.color.red));
+            tvStrUnitsRight.setTextColor(
+                    unitsRight > 1 ? getColor(R.color.black) : getColor(R.color.red));
 
             if (unitsLeft <= 1) {
                 tvStrUnitsLeft.setAnimation(animation);
@@ -320,28 +312,19 @@ public class StatusFragment extends Fragment {
             tvStrUnitsRemainingLeft.setText(unitsRemainingLeft);
             tvStrUnitsRemainingRight.setText(unitsRemainingRight);
 
-            tvStrUnitsRemainingLeft.setTextColor(unitsLeft > 1 ? getResources()
-                    .getColor(R.color.black) : getResources().getColor(
-                    R.color.red));
-            tvStrUnitsRemainingRight
-                    .setTextColor(unitsRight > 1 ? getResources().getColor(
-                            R.color.black) : getResources().getColor(
-                            R.color.red));
+            tvStrUnitsRemainingLeft.setTextColor(
+                    unitsLeft > 1 ? getColor(R.color.black) : getColor(R.color.red));
+            tvStrUnitsRemainingRight.setTextColor(
+                    unitsRight > 1 ? getColor(R.color.black) : getColor(R.color.red));
 
             if (unitsRight <= 1) {
                 tvStrUnitsRight.setAnimation(animation);
             }
 
-            boolean isLeftVisible = timeLensesVO != null
-                    && timeLensesVO.getInUseLeft() == 1
-            /* && lensesDataVO.getNumber_units_left() > 0 */;
-
+            boolean isLeftVisible = (timeLensesVO.getInUseLeft() == 1);
             setVisibleUnitLeft(isLeftVisible ? View.VISIBLE : View.INVISIBLE);
 
-            boolean isRightVisible = timeLensesVO != null
-                    && timeLensesVO.getInUseRight() == 1
-			/* && lensesDataVO.getNumber_units_right() > 0 */;
-
+            boolean isRightVisible = (timeLensesVO.getInUseRight() == 1);
             setVisibleUnitRight(isRightVisible ? View.VISIBLE : View.INVISIBLE);
 
             if (!isLeftVisible) {
@@ -352,15 +335,17 @@ public class StatusFragment extends Fragment {
                 tvStrUnitsRight.clearAnimation();
             }
 
-            view2.setVisibility(timeLensesVO != null
-                    && (timeLensesVO.getInUseLeft() == 1 || timeLensesVO.getInUseRight() == 1)
-                    && (tvStrUnitsLeft.getVisibility() == View.VISIBLE || tvStrUnitsRight
-                    .getVisibility() == View.VISIBLE) ? View.VISIBLE
-                    : View.GONE);
         } else {
             setVisibleUnitLeft(View.GONE);
             setVisibleUnitRight(View.GONE);
-            view2.setVisibility(View.GONE);
+        }
+    }
+
+    public int getColor(int id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return getResources().getColor(id, null);
+        } else {
+            return getResources().getColor(id);
         }
     }
 
@@ -423,28 +408,22 @@ public class StatusFragment extends Fragment {
         setNumUnitsLenses(timeLensesVO);
         setDaysNotUsed(timeLensesVO);
 
+        if (timeLensesVO == null) {
+            CoordinatorLayout.LayoutParams params
+                    = new CoordinatorLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+                    LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
+            fab.setLayoutParams(params);
+            fab.show();
+        } else {
+            fab.hide();
+        }
+
+        toolbar.setTitle(R.string.title_status);
+
         mTracker.setScreenName("StatusFragment");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-//		if (mAdView != null) {
-//            mAdView.resume();
-//		}
-    }
-
-    @Override
-    public void onPause() {
-//		if (mAdView != null) {
-//            mAdView.pause();
-//		}
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-//		if (mAdView != null) {
-//            mAdView.destroy();
-//		}
-        super.onDestroy();
     }
 
     public void openDialogNumber(View view) {
@@ -507,8 +486,8 @@ public class StatusFragment extends Fragment {
                                         timeLensesVO.getId());
 
                                 setDays(timeLensesVO);
-                                AlarmDAO.getInstance(context).setAlarm(
-                                        timeLensesVO.getId());
+//                                AlarmDAO.getInstance(context).setAlarm(
+//                                        timeLensesVO.getId());
                             }
                         })
                 .setNegativeButton(R.string.btn_cancel,

@@ -8,6 +8,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="blue">#0000FF</color>
+    <color name="light_blue">#bfbfff</color>
     <color name="green">#009933</color>
     <color name="red">#CC0033</color>
     <color name="black">#000000</color>

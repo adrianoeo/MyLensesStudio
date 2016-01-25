@@ -13,12 +13,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.aeo.mylenses.R;
+import com.aeo.mylenses.dao.AlarmDAO;
 import com.aeo.mylenses.dao.LensesDataDAO;
+import com.aeo.mylenses.dao.TimeLensesDAO;
 import com.aeo.mylenses.fragment.StatusFragment;
 import com.aeo.mylenses.util.AnalyticsApplication;
 import com.aeo.mylenses.util.Utility;
@@ -66,13 +67,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            super.onBackPressed();
-//        }
-
         if (doubleBackToExitPressedOnce) {
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -95,31 +89,6 @@ public class MainActivity extends AppCompatActivity
         }, 2000);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        if (id == R.id.menuHelp) {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setMessage(R.string.msg_units);
-//            builder.setCancelable(true);
-//            builder.setPositiveButton(R.string.btn_ok, null);
-//            AlertDialog dialog = builder.create();
-//            dialog.show();
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -129,6 +98,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_compra) {
             shop();
             toolbar.setTitle(R.string.nav_compra);
+        } else if (id == R.id.nav_exit) {
+            this.finish();
         } else {
             Utility.setScreen(id, toolbar, getSupportFragmentManager());
         }
@@ -136,7 +107,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-
     }
 
     private void shop() {
@@ -198,6 +168,16 @@ public class MainActivity extends AppCompatActivity
         builder.setNegativeButton(R.string.btn_no, null);
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        //Seta Alarme para notificações
+        TimeLensesDAO timeLensesDAO = TimeLensesDAO.getInstance(getApplicationContext());
+        AlarmDAO alarmDAO = AlarmDAO.getInstance(getApplicationContext());
+        alarmDAO.setAlarm(timeLensesDAO.getLastIdLens());
     }
 
 }

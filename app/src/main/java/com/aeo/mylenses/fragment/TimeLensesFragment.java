@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.aeo.mylenses.R;
 import com.aeo.mylenses.adapter.TimeLensesCollectionPagerAdapter;
-import com.aeo.mylenses.dao.AlarmDAO;
 import com.aeo.mylenses.dao.TimeLensesDAO;
 import com.aeo.mylenses.slidetab.SlidingTabLayout;
 import com.aeo.mylenses.util.AnalyticsApplication;
@@ -39,8 +38,6 @@ import com.google.android.gms.analytics.Tracker;
 public class TimeLensesFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private int idLenses;
-
-//    private OnFragmentInteractionListener mListener;
 
     TimeLensesCollectionPagerAdapter timeLensesCollectionPagerAdapter;
     ViewPager mViewPager;
@@ -255,8 +252,8 @@ public class TimeLensesFragment extends Fragment {
         TimeLensesDAO timeLensesDAO = TimeLensesDAO.getInstance(context);
         timeLensesDAO.delete(id);
 
-        AlarmDAO alarmDAO = AlarmDAO.getInstance(context);
-        alarmDAO.setAlarm(timeLensesDAO.getLastIdLens());
+//        AlarmDAO alarmDAO = AlarmDAO.getInstance(context);
+//        alarmDAO.setAlarm(timeLensesDAO.getLastIdLens());
     }
 
     private boolean getViewsFragmentLenses() {
