@@ -1,0 +1,89 @@
+<resources>
+    <string name="banner_ad_unit_id">ca-app-pub-1284512514182141/7444685317</string>
+
+    <string name="app_name">Мои объективы</string>
+
+    <string name="navigation_drawer_open">Открыть ящик навигации</string>
+    <string name="navigation_drawer_close">Закрыть навигации ящик</string>
+
+    <string name="locale">dd/MM/yyyy</string>
+
+
+    <!-- Novos -->
+    <string name="nav_status">статус линзы</string>
+    <string name="nav_periodo">линзы время</string>
+    <string name="nav_dados">данные</string>
+    <string name="nav_notificacao">уведомление</string>
+    <string name="nav_compra">Купить линзы</string>
+    <string name="nav_exit">Выход</string>
+
+    <string name="title_status">Положение дел</string>
+    <string name="title_periodo">период</string>
+    <string name="title_dados">данные</string>
+
+    <string name="lblQtd">Общее количество линз:</string>
+    <string name="lbl_bc">Радиус кривизны (BC)</string>
+    <string name="lbl_dia">Диаметр (DIA)</string>
+    <string name="btn_horario">12:00</string>
+    <string name="btn_copy">копия направо</string>
+    <!---->
+
+    <string name="menuSave">сохранять</string>
+    <string name="menuEdit">редактировать</string>
+    <string name="menuDelete">Удалить</string>
+    <string name="menuCancel">Отмена</string>
+    <string name="menuShare">Поделиться</string>
+    <string name="leftEye">Левый (OS)</string>
+    <string name="rightEye">Правый (OD)</string>
+    <string name="dateLeftEye">Дата начала Ношение:</string>
+    <string name="dateRightEye">Дата начала Ношение:</string>
+    <string name="tabLeftLens">Левый</string>
+    <string name="tabRightLens">Правый</string>
+    <string name="btnDatePicker">Выберите дату</string>
+    <string name="lblMonths">Замена время:</string>
+    <string name="service_name">Заменить объектив</string>
+    <string name="service_daily_name">Ношение линз?</string>
+    <string name="msgSaved">Сохраненные</string>
+    <string name="msgNotificationTitle">Пора менять линзы</string>
+    <string name="msgNotificationLeftEye">Замените левую линзу</string>
+    <string name="msgNotificationRightEye">Замените правую линзу</string>
+    <string name="msgNotificationBothEyes">Замените контактные линзы</string>
+    <string name="msg_insert_time_replace">Вставьте времени для объективов</string>
+    <string name="msg_no_buy_site">Магазины сайт не указан в линзах данных.\n Вы хотите, чтобы открыть браузер в любом случае?</string>
+    <string name="msg_cancel_notification">Не уведомлять ближайшие дни</string>
+    <string name="msg_press_once_again_to_exit">Нажмите еще раз, чтобы выйти</string>
+    <string name="msg_are_you_wearing_today">Вы носите сегодня?</string>
+    <string name="msg_insert_time_of_lenses">Пожалуйста, введите время для Объективы</string>
+    <string name="title_number_picker_days_not_used">Дни я не носить</string>
+    <string name="str_set_time_alarm">Установить время напоминания</string>
+    <string name="str_days_remaining">дней, чтобы изменить</string>
+    <string name="str_day_remaining">день, чтобы изменить</string>
+    <string name="str_time_to_replace">Пора менять</string>
+    <string name="str_day_expired">День истек</string>
+    <string name="str_days_expired">Дни истек</string>
+    <string name="str_days_before">Напомнить мне дней до</string>
+    <string name="str_unit_remaining">Oставшееся блок</string>
+    <string name="str_units_remaining">Oстальные подразделения</string>
+    <string name="str_left">Ллевый</string>
+    <string name="str_right">Правый</string>
+    <string name="str_email_subject_data_lenses">Мои Линзы данных</string>
+    <string name="str_in_use">Носить</string>
+    <string name="str_remind_every_day">Напомнить каждый день, если я ношу</string>
+    <string name="str_days_not_used">Дни не носить</string>
+    <string name="str_day_not_used">День не носить</string>
+    <string name="lbl_brand">производитель</string>
+    <string name="lbl_desc_lens">Название объектива/бренда</string>
+    <string name="lbl_power">Оптическая сила</string>
+    <string name="lbl_cylinder">цилиндр</string>
+    <string name="lbl_axis">Ось</string>
+    <string name="lbl_add">аддидация (ADD)</string>
+    <string name="lbl_type_lens">Тип объектива</string>
+    <string name="lbl_buy_site">Торговые линзы сайт</string>
+    <string name="btn_yes">да</string>
+    <string name="btn_no">Нет</string>
+    <string name="btn_ok">ОК</string>
+    <string name="btn_cancel">Отмена</string>
+    <string name="str_days">Дней</string>
+    <string name="str_months">Месяцы</string>
+    <string name="str_years">лет</string>
+</resources>

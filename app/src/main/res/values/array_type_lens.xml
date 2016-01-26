@@ -1,8 +1,8 @@
 <resources>
     <string-array name="array_type_lens">
-        <item>Myopia/Hypermetropia</item>
-        <item>Astigmatism</item>
-        <item>Multifocal/Presbyopia</item>
-        <item>Colored/No degree</item>
+        <item>Близорукость/Дальнозоркость</item>
+        <item>Астигматизм</item>
+        <item>Мультифокальная/пресбиопия</item>
+        <item>цветной/Нет степени</item>
     </string-array>
 </resources>    

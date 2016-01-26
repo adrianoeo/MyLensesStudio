@@ -7,8 +7,8 @@ android {
         applicationId 'com.aeo.mylenses'
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 17184
-        versionName '4.8'
+        versionCode 17185
+        versionName '4.9'
     }
     buildTypes {
         release {
